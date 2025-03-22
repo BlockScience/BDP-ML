@@ -30,6 +30,11 @@
                 "ID": "Y Test Array",
                 "Name": "Y Test Array",
                 "Description": "An array of Y testing data"
+            },
+            {
+                "ID": "Model",
+                "Name": "Model",
+                "Description": "A machine learning model"
             }
         ],
         "Blocks": [
@@ -67,7 +72,14 @@
                 "Domain": [],
                 "ID": "Load Supervised Features",
                 "Name": "Load Supervised Features"
-              }
+              },
+              {
+                "ID": "Fit Supervised Model",
+                "Name": "Fit Supervised Model",
+                "Description": "Fits a model to the training data",
+                "Domain": ["Model", "X Train Array", "Y Train Array"],
+                "Codomain": ["Model"]
+            }
         ]
     },
     "Workbench": {
@@ -138,7 +150,14 @@
                   "X Test Array",
                   "Y Test Array"
                 ]
-              }
+              },
+                {
+                    "ID": "Fit Supervised Model - Default",
+                    "Name": "Fit Supervised Model - Default",
+                    "Description": "Fits a model to the training data based on the default methods from the model",
+                    "Parent": "Fit Supervised Model",
+                    "Ports": ["Model", "X Train Array", "Y Train Array"],
+                    "Terminals": ["Model"]}
         ],
         "Wires": [
             {
