@@ -30,7 +30,7 @@
                 "ID": "Y Test Array",
                 "Name": "Y Test Array",
                 "Description": "An array of Y testing data"
-                        }
+            }
         ],
         "Blocks": [
             {
@@ -110,15 +110,51 @@
                 "Parent": "Y",
                 "Source": {"Processor": "Load MNIST Dataset", "Index": 1},
                 "Target": {"Processor": "Test-Train Split", "Index": 1}
-                        }
+            },
+            {
+                "ID": "W3",
+                "Parent": "X Train Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 0},
+                "Target": {"Processor": "Image Normalization Preprocessing - Training", "Index": 0}
+            },
+            {
+                "ID": "W4",
+                "Parent": "Y Train Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 1},
+                "Target": {"Processor": "Image Normalization Preprocessing - Training", "Index": 1}
+            },
+            {
+                "ID": "W5",
+                "Parent": "X Train Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 0},
+                "Target": {"Processor": "Image Normalization Preprocessing - Testing", "Index": 0}
+            },
+            {
+                "ID": "W6",
+                "Parent": "Y Train Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 1},
+                "Target": {"Processor": "Image Normalization Preprocessing - Testing", "Index": 1}
+            },
+            {
+                "ID": "W7",
+                "Parent": "X Test Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 2},
+                "Target": {"Processor": "Image Normalization Preprocessing - Testing", "Index": 2}
+            },
+            {
+                "ID": "W8",
+                "Parent": "Y Test Array",
+                "Source": {"Processor": "Test-Train Split", "Index": 3},
+                "Target": {"Processor": "Image Normalization Preprocessing - Testing", "Index": 3}
+            }
         ],
         "Systems": [
             {
                 "ID": "Load MNIST",
                 "Name": "Load MNIST",
                 "Description": "The system representing loading the MNIST dataset, preparing the cross validation split, and pre-processing the data",
-                "Processors": ["Load MNIST Dataset", "Test-Train Split"],
-                "Wires": ["W1", "W2"]
+                "Processors": ["Load MNIST Dataset", "Test-Train Split", "Image Normalization Preprocessing - Training", "Image Normalization Preprocessing - Testing"],
+                "Wires": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"]
             }
         ]
     }
