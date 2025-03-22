@@ -258,6 +258,33 @@
                     "Terminals": [
                       "Evaluation Metrics"
                     ]
+                  },
+                  {
+                    "Description": "Runs experiments on the MNIST dataset",
+                    "ID": "MNIST Experiment",
+                    "Name": "MNIST Experiment",
+                    "Parent": "Experiment",
+                    "Ports": [
+                      "Model"
+                    ],
+                    "Subsystem": {
+                      "Port Mappings": [
+                        {
+                          "Index": 0,
+                          "Processor": "Default Supervised Learning"
+                        }
+                      ],
+                      "System ID": "MNIST Experiment System",
+                      "Terminal Mappings": [
+                        {
+                          "Index": 0,
+                          "Processor": "Default Supervised Learning"
+                        }
+                      ]
+                    },
+                    "Terminals": [
+                      "Evaluation Metrics"
+                    ]
                   }
         ],
         "Wires": [
