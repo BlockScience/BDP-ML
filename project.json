@@ -111,7 +111,13 @@
                 ],
                 "ID": "Supervised Learning",
                 "Name": "Supervised Learning"
-              }
+              },
+                {
+                    "ID": "Experiment",
+                    "Name": "Experiment",
+                    "Description": "A machine learning experiment",
+                    "Domain": ["Model"],
+                    "Codomain": ["Evaluation Metrics"]}
         ]
     },
     "Workbench": {
@@ -314,6 +320,30 @@
                 "Parent": "Evaluation Metrics",
                 "Source": {"Processor": "Evaluate Supervised Model - Default", "Index": 0},
                 "Target": {"Processor": "No Post-processing", "Index": 0}
+            },
+            {
+                "ID": "W11",
+                "Parent": "X Train Array",
+                "Source": {"Processor": "Load MNIST", "Index": 0},
+                "Target": {"Processor": "Default Supervised Learning", "Index": 1}
+            },
+            {
+                "ID": "W12",
+                "Parent": "Y Train Array",
+                "Source": {"Processor": "Load MNIST", "Index": 1},
+                "Target": {"Processor": "Default Supervised Learning", "Index": 2}
+            },
+            {
+                "ID": "W13",
+                "Parent": "X Test Array",
+                "Source": {"Processor": "Load MNIST", "Index": 2},
+                "Target": {"Processor": "Default Supervised Learning", "Index": 3}
+            },
+            {
+                "ID": "W14",
+                "Parent": "Y Test Array",
+                "Source": {"Processor": "Load MNIST", "Index": 3},
+                "Target": {"Processor": "Default Supervised Learning", "Index": 4}
             }
         ],
         "Systems": [
@@ -328,7 +358,14 @@
                 "Name": "Default Supervised Learning System",
                 "Description": "Conducts supervised learning using the defaults of the model",
                 "Processors": ["Fit Supervised Model - Default", "Evaluate Supervised Model - Default", "No Post-processing"],
-                "Wires": ["W9", "W10"]}
+                "Wires": ["W9", "W10"]},
+            {
+                "ID": "MNIST Experiment System",
+                "Name": "MNIST Experiment System",
+                "Description": "The system representing the entire machine learning experiment for the MNIST dataset",
+                "Processors": ["Load MNIST", "Default Supervised Learning"],
+                "Wires": ["W11", "W12", "W13", "W14"]
+            }
         ]
     }
 }
