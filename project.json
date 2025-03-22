@@ -35,6 +35,11 @@
                 "ID": "Model",
                 "Name": "Model",
                 "Description": "A machine learning model"
+            },
+            {
+                "ID": "Evaluation Metrics",
+                "Name": "Evaluation Metrics",
+                "Description": "Metrics for evaluating the model"
             }
         ],
         "Blocks": [
@@ -79,6 +84,20 @@
                 "Description": "Fits a model to the training data",
                 "Domain": ["Model", "X Train Array", "Y Train Array"],
                 "Codomain": ["Model"]
+            },
+            {
+                "ID": "Evaluate Supervised Model",
+                "Name": "Evaluate Supervised Model",
+                "Description": "Evaluates the model based on the test data",
+                "Domain": ["Model", "X Test Array", "Y Test Array"],
+                "Codomain": ["Evaluation Metrics"]
+            },
+            {
+                "ID": "Post-processing",
+                "Name": "Post-processing",
+                "Description": "The block for taking care of any post-processing of metrics",
+                "Domain": ["Evaluation Metrics"],
+                "Codomain": ["Evaluation Metrics"]
             }
         ]
     },
@@ -157,7 +176,23 @@
                     "Description": "Fits a model to the training data based on the default methods from the model",
                     "Parent": "Fit Supervised Model",
                     "Ports": ["Model", "X Train Array", "Y Train Array"],
-                    "Terminals": ["Model"]}
+                    "Terminals": ["Model"]},
+                {
+                    "ID": "Evaluate Supervised Model - Default",
+                    "Name": "Evaluate Supervised Model - Default",
+                    "Description": "Evaluates the model based on the test data using the default evaluation methods",
+                    "Parent": "Evaluate Supervised Model",
+                    "Ports": ["Model", "X Test Array", "Y Test Array"],
+                    "Terminals": ["Evaluation Metrics"]
+                },
+                {
+                    "ID": "No Post-processing",
+                    "Name": "No Post-processing",
+                    "Description": "Simple pass through of the metrics",
+                    "Parent": "Post-processing",
+                    "Ports": ["Evaluation Metrics"],
+                    "Terminals": ["Evaluation Metrics"]
+                }
         ],
         "Wires": [
             {
@@ -207,6 +242,18 @@
                 "Parent": "Y Test Array",
                 "Source": {"Processor": "Test-Train Split", "Index": 3},
                 "Target": {"Processor": "Image Normalization Preprocessing - Testing", "Index": 3}
+            },
+            {
+                "ID": "W9",
+                "Parent": "Model",
+                "Source": {"Processor": "Fit Supervised Model - Default", "Index": 0},
+                "Target": {"Processor": "Evaluate Supervised Model - Default", "Index": 0}
+            },
+            {
+                "ID": "W10",
+                "Parent": "Evaluation Metrics",
+                "Source": {"Processor": "Evaluate Supervised Model - Default", "Index": 0},
+                "Target": {"Processor": "No Post-processing", "Index": 0}
             }
         ],
         "Systems": [
@@ -216,7 +263,12 @@
                 "Description": "The system representing loading the MNIST dataset, preparing the cross validation split, and pre-processing the data",
                 "Processors": ["Load MNIST Dataset", "Test-Train Split", "Image Normalization Preprocessing - Training", "Image Normalization Preprocessing - Testing"],
                 "Wires": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"]
-            }
+            },
+            {"ID": "Default Supervised Learning System",
+                "Name": "Default Supervised Learning System",
+                "Description": "Conducts supervised learning using the defaults of the model",
+                "Processors": ["Fit Supervised Model - Default", "Evaluate Supervised Model - Default", "No Post-processing"],
+                "Wires": ["W9", "W10"]}
         ]
     }
 }
