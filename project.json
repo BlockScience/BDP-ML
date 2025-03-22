@@ -98,7 +98,20 @@
                 "Description": "The block for taking care of any post-processing of metrics",
                 "Domain": ["Evaluation Metrics"],
                 "Codomain": ["Evaluation Metrics"]
-            }
+            },
+            {
+                "Codomain": ["Evaluation Metrics"],
+                "Description": "Block for a composite processor of a supervised learning system with cross validation split",
+                "Domain": [
+                  "Model",
+                  "X Train Array",
+                  "Y Train Array",
+                  "X Test Array",
+                  "Y Test Array"
+                ],
+                "ID": "Supervised Learning",
+                "Name": "Supervised Learning"
+              }
         ]
     },
     "Workbench": {
@@ -192,7 +205,54 @@
                     "Parent": "Post-processing",
                     "Ports": ["Evaluation Metrics"],
                     "Terminals": ["Evaluation Metrics"]
-                }
+                },
+                {
+                    "Description": "Conducts supervised learning using the defaults of the model",
+                    "ID": "Default Supervised Learning",
+                    "Name": "Default Supervised Learning",
+                    "Parent": "Supervised Learning",
+                    "Ports": [
+                      "Model",
+                      "X Train Array",
+                      "Y Train Array",
+                      "X Test Array",
+                      "Y Test Array"
+                    ],
+                    "Subsystem": {
+                      "Port Mappings": [
+                        {
+                          "Index": 0,
+                          "Processor": "Fit Supervised Model - Default"
+                        },
+                        {
+                          "Index": 1,
+                          "Processor": "Fit Supervised Model - Default"
+                        },
+                        {
+                          "Index": 2,
+                          "Processor": "Fit Supervised Model - Default"
+                        },
+                        {
+                          "Index": 1,
+                          "Processor": "Evaluate Supervised Model - Default"
+                        },
+                        {
+                          "Index": 2,
+                          "Processor": "Evaluate Supervised Model - Default"
+                        }
+                      ],
+                      "System ID": "Default Supervised Learning System",
+                      "Terminal Mappings": [
+                        {
+                          "Index": 0,
+                          "Processor": "No Post-processing"
+                        }
+                      ]
+                    },
+                    "Terminals": [
+                      "Evaluation Metrics"
+                    ]
+                  }
         ],
         "Wires": [
             {
