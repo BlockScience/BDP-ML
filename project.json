@@ -30,7 +30,7 @@
                 "ID": "Y Test Array",
                 "Name": "Y Test Array",
                 "Description": "An array of Y testing data"
-            }
+                        }
         ],
         "Blocks": [
             {
@@ -46,6 +46,20 @@
                 "Description": "Splits data into training and testing sets",
                 "Domain": ["X", "Y"],
                 "Codomain": ["X Train Array", "Y Train Array", "X Test Array", "Y Test Array"]
+            },
+            {
+                "ID": "Training Data Preprocessing",
+                "Name": "Training Data Preprocessing",
+                "Description": "Preprocesses training data for model training",
+                "Domain": ["X Train Array", "Y Train Array"],
+                "Codomain": ["X Train Array", "Y Train Array"]
+            },
+            {
+                "ID": "Testing Data Preprocessing",
+                "Name": "Testing Data Preprocessing",
+                "Description": "Preprocesses testing data for model evaluation, optionally can use the training data in addition",
+                "Domain": ["X Train Array", "Y Train Array", "X Test Array", "Y Test Array"],
+                "Codomain": ["X Test Array", "Y Test Array"]
             }
         ]
     },
@@ -66,6 +80,22 @@
                 "Parent": "Cross Validation Split",
                 "Ports": ["X", "Y"],
                 "Terminals": ["X Train Array", "Y Train Array", "X Test Array", "Y Test Array"]
+            },
+            {
+                "ID": "Image Normalization Preprocessing - Training",
+                "Name": "Image Normalization Preprocessing - Training",
+                "Description": "Preprocessesing for image based training data",
+                "Parent": "Training Data Preprocessing",
+                "Ports": ["X Train Array", "Y Train Array"],
+                "Terminals": ["X Train Array", "Y Train Array"]
+            },
+            {
+                "ID": "Image Normalization Preprocessing - Testing",
+                "Name": "Image Normalization Preprocessing - Testing",
+                "Description": "Preprocesses testing data for model evaluation",
+                "Parent": "Testing Data Preprocessing",
+                "Ports": ["X Train Array", "Y Train Array", "X Test Array", "Y Test Array"],
+                "Terminals": ["X Test Array", "Y Test Array"]
             }
         ],
         "Wires": [
@@ -80,7 +110,7 @@
                 "Parent": "Y",
                 "Source": {"Processor": "Load MNIST Dataset", "Index": 1},
                 "Target": {"Processor": "Test-Train Split", "Index": 1}
-            }
+                        }
         ],
         "Systems": [
             {
