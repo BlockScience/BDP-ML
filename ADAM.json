@@ -36,6 +36,13 @@
               "Description": "Loops through the ADAM updates",
               "Domain": ["theta", "m", "v", "t"],
               "Codomain": ["theta"]
+          },
+          {
+            "Codomain": ["theta"],
+            "Description": "Block for the ADAM algorithm",
+            "Domain": ["theta"],
+            "ID": "ADAM Block",
+            "Name": "ADAM Block"
           }
         ]
     },
@@ -56,6 +63,33 @@
                 "Parent": "ADAM Update Loop Block",
                 "Ports": ["theta", "m", "v", "t"],
                 "Terminals": ["theta"]
+            },
+            {
+              "Description": "The ADAM algorithm",
+              "ID": "ADAM",
+              "Name": "ADAM",
+              "Parent": "ADAM Block",
+              "Ports": [
+                "theta"
+              ],
+              "Subsystem": {
+                "Port Mappings": [
+                  {
+                    "Index": 0,
+                    "Processor": "ADAM Initialization"
+                  }
+                ],
+                "System ID": "ADAM System",
+                "Terminal Mappings": [
+                  {
+                    "Index": 0,
+                    "Processor": "ADAM Update Loop"
+                  }
+                ]
+              },
+              "Terminals": [
+                "theta"
+              ]
             }
         ],
         "Wires": [
