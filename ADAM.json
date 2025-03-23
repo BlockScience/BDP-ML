@@ -69,6 +69,20 @@
             "Description": "Computes the gradients",
             "Domain": ["theta"],
             "Codomain": ["g"]
+        },
+        {
+            "ID": "Update Biased First Moment",
+            "Name": "Update Biased First Moment",
+            "Description": "Updates the biased first moment estimate",
+            "Domain": ["m", "g"],
+            "Codomain": ["m"]
+        },
+        {
+            "ID": "Update Biased Second Moment",
+            "Name": "Update Biased Second Moment",
+            "Description": "Updates the biased second moment estimate",
+            "Domain": ["v", "g"],
+            "Codomain": ["v"]
         }
         ]
     },
@@ -128,7 +142,7 @@
             {
               "ID": "Get Function Gradients",
               "Name": "Get Function Gradients",
-              "Description": "Computes the gradients of a function which respect to theta",
+              "Description": "Computes the gradients of a function which respect to theta. $g_t$ ← $∇_θf_t(θ_{t−1})$",
               "Parent": "Get Gradients",
               "Ports": ["theta"],
               "Terminals": ["g"]
