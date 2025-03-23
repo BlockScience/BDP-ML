@@ -60,6 +60,11 @@
                 "ID": "theta",
                 "Name": "theta",
                 "Description": "Model parameters"
+            },
+            {
+                "ID": "g",
+                "Name": "g",
+                "Description": "Gradients"
             }
         ],
         "Blocks": [
@@ -152,6 +157,13 @@
                     "Description": "Updates the current timestep value",
                     "Domain": ["t"],
                     "Codomain": ["t"]
+                },
+                {
+                    "ID": "Get Gradients",
+                    "Name": "Get Gradients",
+                    "Description": "Computes the gradients",
+                    "Domain": ["theta"],
+                    "Codomain": ["g"]
                 }
         ]
     },
@@ -407,6 +419,14 @@
                     "Parent": "Update Timestep",
                     "Ports": ["t"],
                     "Terminals": ["t"]
+                },
+                {
+                    "ID": "Get Function Gradients",
+                    "Name": "Get Function Gradients",
+                    "Description": "Computes the gradients of a function which respect to theta",
+                    "Parent": "Get Gradients",
+                    "Ports": ["theta"],
+                    "Terminals": ["g"]
                 }
         ],
         "Wires": [

@@ -20,7 +20,12 @@
                 "ID": "theta",
                 "Name": "theta",
                 "Description": "The model parameters"
-            }
+            },
+            {
+              "ID": "g",
+              "Name": "g",
+              "Description": "Gradients"
+          }
         ],
         "Blocks": [
             {
