@@ -104,6 +104,13 @@
             "Description": "Updates model parameters based on bias-corrected moment estimates",
             "Domain": ["m", "v", "theta"],
             "Codomain": ["theta"]
+        },
+        {
+          "Codomain": ["theta"],
+          "Description": "One step in the optimization process",
+          "Domain": ["theta", "m", "v", "t", "theta"],
+          "ID": "Optimization Step",
+          "Name": "Optimization Step"
         }
         ]
     },
@@ -215,6 +222,45 @@
           "Parent": "Convergence Criteria",
           "Ports": ["m", "v", "t", "theta"],
           "Terminals": ["m", "v", "t", "theta"]
+      },
+      {
+        "Description": "A lazy loaded composite processor block for ADAM Update Step System",
+        "ID": "ADAM Update Step",
+        "Name": "ADAM Update Step",
+        "Parent": "Optimization Step",
+        "Ports": ["theta", "m", "v", "t", "theta"],
+        "Subsystem": {
+          "Port Mappings": [
+            {
+              "Index": 0,
+              "Processor": "Get Function Gradients"
+            },
+            {
+              "Index": 0,
+              "Processor": "Exponential Smoothing First Moment"
+            },
+            {
+              "Index": 0,
+              "Processor": "Exponential Smoothing Second Moment"
+            },
+            {
+              "Index": 0,
+              "Processor": "Increment Timestep"
+            },
+            {
+              "Index": 2,
+              "Processor": "ADAM Theta Update"
+            }
+          ],
+          "System ID": "ADAM Update Step System",
+          "Terminal Mappings": [
+            {
+              "Index": 0,
+              "Processor": "ADAM Theta Update"
+            }
+          ]
+        },
+        "Terminals": ["theta"]
       }
         ],
         "Wires": [
