@@ -145,6 +145,13 @@
                     "Description": "Evaluates whether the optimization process has converged based on moments, timestep, and parameters",
                     "Domain": ["m", "v", "t", "theta"],
                     "Codomain": ["m", "v", "t", "theta"]
+                },
+                {
+                    "ID": "Update Timestep",
+                    "Name": "Update Timestep",
+                    "Description": "Updates the current timestep value",
+                    "Domain": ["t"],
+                    "Codomain": ["t"]
                 }
         ]
     },
@@ -392,6 +399,14 @@
                     "Parent": "Convergence Criteria",
                     "Ports": ["m", "v", "t", "theta"],
                     "Terminals": ["m", "v", "t", "theta"]
+                },
+                {
+                    "ID": "Increment Timestep",
+                    "Name": "Increment Timestep",
+                    "Description": "Increments t by 1",
+                    "Parent": "Update Timestep",
+                    "Ports": ["t"],
+                    "Terminals": ["t"]
                 }
         ],
         "Wires": [
