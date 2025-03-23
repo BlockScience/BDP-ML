@@ -40,6 +40,26 @@
                 "ID": "Evaluation Metrics",
                 "Name": "Evaluation Metrics",
                 "Description": "Metrics for evaluating the model"
+            },
+            {
+                "ID": "m",
+                "Name": "m",
+                "Description": "First moment estimate"
+            },
+            {
+                "ID": "v",
+                "Name": "v",
+                "Description": "Second moment estimate"
+            },
+            {
+                "ID": "t",
+                "Name": "t",
+                "Description": "Timestep"
+            },
+            {
+                "ID": "theta",
+                "Name": "theta",
+                "Description": "Model parameters"
             }
         ],
         "Blocks": [
@@ -117,7 +137,15 @@
                     "Name": "Experiment",
                     "Description": "A machine learning experiment",
                     "Domain": ["Model"],
-                    "Codomain": ["Evaluation Metrics"]}
+                    "Codomain": ["Evaluation Metrics"]
+                },
+                {
+                    "ID": "Convergence Criteria",
+                    "Name": "Convergence Criteria",
+                    "Description": "Evaluates whether the optimization process has converged based on moments, timestep, and parameters",
+                    "Domain": ["m", "v", "t", "theta"],
+                    "Codomain": ["m", "v", "t", "theta"]
+                }
         ]
     },
     "Workbench": {
@@ -195,7 +223,8 @@
                     "Description": "Fits a model to the training data based on the default methods from the model",
                     "Parent": "Fit Supervised Model",
                     "Ports": ["Model", "X Train Array", "Y Train Array"],
-                    "Terminals": ["Model"]},
+                    "Terminals": ["Model"]
+                },
                 {
                     "ID": "Evaluate Supervised Model - Default",
                     "Name": "Evaluate Supervised Model - Default",
@@ -355,6 +384,14 @@
                   "Terminals": [
                     "Evaluation Metrics"
                   ]
+                },
+                {
+                    "ID": "Theta Convergence Criteria",
+                    "Name": "Theta Convergence Criteria",
+                    "Description": "Convergence criteria based only on theta",
+                    "Parent": "Convergence Criteria",
+                    "Ports": ["m", "v", "t", "theta"],
+                    "Terminals": ["m", "v", "t", "theta"]
                 }
         ],
         "Wires": [
