@@ -285,7 +285,50 @@
                     "Terminals": [
                       "Evaluation Metrics"
                     ]
-                  }
+                  },
+                  {
+                    "ID": "Load ImageNet Dataset",
+                    "Name": "Load ImageNet Dataset",
+                    "Description": "Loads the ImageNet dataset",
+                    "Parent": "Load Supervised Dataset",
+                    "Ports": [],
+                    "Terminals": ["X", "Y"]
+                },
+                {
+                  "Description": "Composite processor for loading the ImageNet dataset",
+                  "ID": "Load ImageNet",
+                  "Name": "Load ImageNet",
+                  "Parent": "Load Supervised Features",
+                  "Ports": [],
+                  "Subsystem": {
+                    "Port Mappings": [],
+                    "System ID": "Load ImageNet System",
+                    "Terminal Mappings": [
+                      {
+                        "Index": 0,
+                        "Processor": "Image Normalization Preprocessing - Training"
+                      },
+                      {
+                        "Index": 1,
+                        "Processor": "Image Normalization Preprocessing - Training"
+                      },
+                      {
+                        "Index": 0,
+                        "Processor": "Image Normalization Preprocessing - Testing"
+                      },
+                      {
+                        "Index": 1,
+                        "Processor": "Image Normalization Preprocessing - Testing"
+                      }
+                    ]
+                  },
+                  "Terminals": [
+                    "X Train Array",
+                    "Y Train Array",
+                    "X Test Array",
+                    "Y Test Array"
+                  ]
+                }
         ],
         "Wires": [
             {
@@ -371,7 +414,19 @@
                 "Parent": "Y Test Array",
                 "Source": {"Processor": "Load MNIST", "Index": 3},
                 "Target": {"Processor": "Default Supervised Learning", "Index": 4}
-            }
+            },
+            {
+              "ID": "W15",
+              "Parent": "X",
+              "Source": {"Processor": "Load ImageNet Dataset", "Index": 0},
+              "Target": {"Processor": "Test-Train Split", "Index": 0}
+          },
+          {
+            "ID": "W16",
+            "Parent": "Y",
+            "Source": {"Processor": "Load ImageNet Dataset", "Index": 1},
+            "Target": {"Processor": "Test-Train Split", "Index": 1}
+        }
         ],
         "Systems": [
             {
@@ -392,7 +447,14 @@
                 "Description": "The system representing the entire machine learning experiment for the MNIST dataset",
                 "Processors": ["Load MNIST", "Default Supervised Learning"],
                 "Wires": ["W11", "W12", "W13", "W14"]
-            }
+            },
+            {
+              "ID": "Load ImageNet System",
+              "Name": "Load ImageNet System",
+              "Description": "The system representing loading the ImageNet dataset, preparing the cross validation split, and pre-processing the data",
+              "Processors": ["Load ImageNet Dataset", "Test-Train Split", "Image Normalization Preprocessing - Training", "Image Normalization Preprocessing - Testing"],
+              "Wires": ["W15", "W16", "W3", "W4", "W5", "W6", "W7", "W8"]
+          }
         ]
     }
 }
