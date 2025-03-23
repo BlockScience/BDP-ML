@@ -40,6 +40,31 @@
                 "ID": "Evaluation Metrics",
                 "Name": "Evaluation Metrics",
                 "Description": "Metrics for evaluating the model"
+            },
+            {
+                "ID": "m",
+                "Name": "m",
+                "Description": "First moment estimate"
+            },
+            {
+                "ID": "v",
+                "Name": "v",
+                "Description": "Second moment estimate"
+            },
+            {
+                "ID": "t",
+                "Name": "t",
+                "Description": "Timestep"
+            },
+            {
+                "ID": "theta",
+                "Name": "theta",
+                "Description": "Model parameters"
+            },
+            {
+                "ID": "g",
+                "Name": "g",
+                "Description": "Gradients"
             }
         ],
         "Blocks": [
@@ -117,7 +142,8 @@
                     "Name": "Experiment",
                     "Description": "A machine learning experiment",
                     "Domain": ["Model"],
-                    "Codomain": ["Evaluation Metrics"]}
+                    "Codomain": ["Evaluation Metrics"]
+                }
         ]
     },
     "Workbench": {
@@ -195,7 +221,8 @@
                     "Description": "Fits a model to the training data based on the default methods from the model",
                     "Parent": "Fit Supervised Model",
                     "Ports": ["Model", "X Train Array", "Y Train Array"],
-                    "Terminals": ["Model"]},
+                    "Terminals": ["Model"]
+                },
                 {
                     "ID": "Evaluate Supervised Model - Default",
                     "Name": "Evaluate Supervised Model - Default",
