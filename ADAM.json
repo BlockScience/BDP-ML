@@ -176,6 +176,22 @@
             "Parent": "Update Biased Second Moment",
             "Ports": ["v", "g"],
             "Terminals": ["v"]
+        },
+        {
+            "ID": "Exponential Decay First Moment Bias Correction",
+            "Name": "Exponential Decay First Moment Bias Correction",
+            "Description": "Computes the bias-corrected first moment estimate using exponential decay. $\\hat{m}_t$ ← $m_t$ / (1 − $\\beta_1^t$)",
+            "Parent": "Compute Bias-Corrected First Moment",
+            "Ports": ["m", "t"],
+            "Terminals": ["m"]
+        },
+        {
+            "ID": "Exponential Decay Second Moment Bias Correction",
+            "Name": "Exponential Decay Second Moment Bias Correction",
+            "Description": "Computes the bias-corrected second moment estimate using exponential decay. $\\hat{v}_t$ ← $v_t$ / (1 − $\\beta_2^t$)",
+            "Parent": "Compute Bias-Corrected Second Moment",
+            "Ports": ["v", "t"],
+            "Terminals": ["v"]
         }
         ],
         "Wires": [
