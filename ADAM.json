@@ -83,6 +83,20 @@
             "Description": "Updates the biased second moment estimate",
             "Domain": ["v", "g"],
             "Codomain": ["v"]
+        },
+        {
+            "ID": "Compute Bias-Corrected First Moment",
+            "Name": "Compute Bias-Corrected First Moment",
+            "Description": "Computes the bias-corrected first moment estimate",
+            "Domain": ["m", "t"],
+            "Codomain": ["m"]
+        },
+        {
+            "ID": "Compute Bias-Corrected Second Moment",
+            "Name": "Compute Bias-Corrected Second Moment",
+            "Description": "Computes the bias-corrected second moment estimate",
+            "Domain": ["v", "t"],
+            "Codomain": ["v"]
         }
         ]
     },
