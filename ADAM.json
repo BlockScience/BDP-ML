@@ -97,6 +97,13 @@
             "Description": "Computes the bias-corrected second moment estimate",
             "Domain": ["v", "t"],
             "Codomain": ["v"]
+        },
+        {
+            "ID": "Update Theta",
+            "Name": "Update Theta",
+            "Description": "Updates model parameters based on bias-corrected moment estimates",
+            "Domain": ["m", "v", "theta"],
+            "Codomain": ["theta"]
         }
         ]
     },
@@ -192,6 +199,14 @@
             "Parent": "Compute Bias-Corrected Second Moment",
             "Ports": ["v", "t"],
             "Terminals": ["v"]
+        },
+        {
+            "ID": "ADAM Theta Update",
+            "Name": "ADAM Theta Update",
+            "Description": "Updates model parameters using ADAM formula: $θ_t$ ← $θ_{t-1} - α · \\hat{m}_t / (\\sqrt{\\hat{v}_t} + ϵ)$",
+            "Parent": "Update Theta",
+            "Ports": ["m", "v", "theta"],
+            "Terminals": ["theta"]
         }
         ],
         "Wires": [
