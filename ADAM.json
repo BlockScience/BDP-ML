@@ -29,7 +29,14 @@
                 "Description": "Initializes the ADAM state variables",
                 "Domain": ["theta"],
                 "Codomain": ["theta", "m", "v", "t"]
-            }
+            },
+            {
+              "ID": "ADAM Update Loop Block",
+              "Name": "ADAM Update Loop Block",
+              "Description": "Loops through the ADAM updates",
+              "Domain": ["theta", "m", "v", "t"],
+              "Codomain": ["theta"]
+          }
         ]
     },
     "Workbench": {
@@ -41,11 +48,50 @@
                 "Parent": "ADAM Initialization Block",
                 "Ports": ["theta"],
                 "Terminals": ["theta", "m", "v", "t"]
+            },
+            {
+                "ID": "ADAM Update Loop",
+                "Name": "ADAM Update Loop",
+                "Description": "Loops through the ADAM updates",
+                "Parent": "ADAM Update Loop Block",
+                "Ports": ["theta", "m", "v", "t"],
+                "Terminals": ["theta"]
             }
         ],
         "Wires": [
+          {
+            "ID": "W1",
+            "Parent": "theta",
+            "Source": {"Processor": "ADAM Initialization", "Index": 0},
+            "Target": {"Processor": "ADAM Update Loop", "Index": 0}
+        },
+        {
+          "ID": "W2",
+          "Parent": "m",
+          "Source": {"Processor": "ADAM Initialization", "Index": 1},
+          "Target": {"Processor": "ADAM Update Loop", "Index": 1}
+      },
+      {
+        "ID": "W3",
+        "Parent": "v",
+        "Source": {"Processor": "ADAM Initialization", "Index": 2},
+        "Target": {"Processor": "ADAM Update Loop", "Index": 2}
+    },
+    {
+      "ID": "W4",
+      "Parent": "t",
+      "Source": {"Processor": "ADAM Initialization", "Index": 3},
+      "Target": {"Processor": "ADAM Update Loop", "Index": 3}
+  }
         ],
         "Systems": [
+          {
+            "ID": "ADAM System",
+            "Name": "ADAM System",
+            "Description": "The system representing the ADAM algorithm",
+            "Processors": ["ADAM Initialization", "ADAM Update Loop"],
+            "Wires": ["W1", "W2", "W3", "W4"]
+        }
         ]
     }
 }
