@@ -1,0 +1,51 @@
+{
+    "Toolbox": {
+        "Spaces": [
+            {
+                "ID": "m",
+                "Name": "m",
+                "Description": "First moment vector"
+            },
+            {
+                "ID": "v",
+                "Name": "v",
+                "Description": "Second moment vector"
+            },
+            {
+                "ID": "t",
+                "Name": "t",
+                "Description": "The current timestep"
+            },
+            {
+                "ID": "theta",
+                "Name": "theta",
+                "Description": "The model parameters"
+            }
+        ],
+        "Blocks": [
+            {
+                "ID": "ADAM Initialization Block",
+                "Name": "ADAM Initialization Block",
+                "Description": "Initializes the ADAM state variables",
+                "Domain": ["theta"],
+                "Codomain": ["theta", "m", "v", "t"]
+            }
+        ]
+    },
+    "Workbench": {
+        "Processors": [
+            {
+                "ID": "ADAM Initialization",
+                "Name": "ADAM Initialization",
+                "Description": "Initialiazes the ADAM state variables",
+                "Parent": "ADAM Initialization Block",
+                "Ports": ["theta"],
+                "Terminals": ["theta", "m", "v", "t"]
+            }
+        ],
+        "Wires": [
+        ],
+        "Systems": [
+        ]
+    }
+}
