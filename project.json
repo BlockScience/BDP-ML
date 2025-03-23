@@ -328,6 +328,33 @@
                     "X Test Array",
                     "Y Test Array"
                   ]
+                },
+                {
+                  "Description": "End-to-end pipeline for running an ImageNet ML experiment",
+                  "ID": "ImageNet Experiment",
+                  "Name": "ImageNet Experiment",
+                  "Parent": "Experiment",
+                  "Ports": [
+                    "Model"
+                  ],
+                  "Subsystem": {
+                    "Port Mappings": [
+                      {
+                        "Index": 0,
+                        "Processor": "Default Supervised Learning"
+                      }
+                    ],
+                    "System ID": "ImageNet Experiment System",
+                    "Terminal Mappings": [
+                      {
+                        "Index": 0,
+                        "Processor": "Default Supervised Learning"
+                      }
+                    ]
+                  },
+                  "Terminals": [
+                    "Evaluation Metrics"
+                  ]
                 }
         ],
         "Wires": [
@@ -426,7 +453,31 @@
             "Parent": "Y",
             "Source": {"Processor": "Load ImageNet Dataset", "Index": 1},
             "Target": {"Processor": "Test-Train Split", "Index": 1}
-        }
+        },
+        {
+          "ID": "W17",
+          "Parent": "X Train Array",
+          "Source": {"Processor": "Load ImageNet", "Index": 0},
+          "Target": {"Processor": "Default Supervised Learning", "Index": 1}
+      },
+      {
+          "ID": "W18",
+          "Parent": "Y Train Array",
+          "Source": {"Processor": "Load ImageNet", "Index": 1},
+          "Target": {"Processor": "Default Supervised Learning", "Index": 2}
+      },
+      {
+          "ID": "W19",
+          "Parent": "X Test Array",
+          "Source": {"Processor": "Load ImageNet", "Index": 2},
+          "Target": {"Processor": "Default Supervised Learning", "Index": 3}
+      },
+      {
+          "ID": "W20",
+          "Parent": "Y Test Array",
+          "Source": {"Processor": "Load ImageNet", "Index": 3},
+          "Target": {"Processor": "Default Supervised Learning", "Index": 4}
+      }
         ],
         "Systems": [
             {
@@ -454,7 +505,14 @@
               "Description": "The system representing loading the ImageNet dataset, preparing the cross validation split, and pre-processing the data",
               "Processors": ["Load ImageNet Dataset", "Test-Train Split", "Image Normalization Preprocessing - Training", "Image Normalization Preprocessing - Testing"],
               "Wires": ["W15", "W16", "W3", "W4", "W5", "W6", "W7", "W8"]
-          }
+          },
+          {
+            "ID": "ImageNet Experiment System",
+            "Name": "ImageNet Experiment System",
+            "Description": "The system representing the entire machine learning experiment for the ImageNet dataset",
+            "Processors": ["Load ImageNet", "Default Supervised Learning"],
+            "Wires": ["W17", "W18", "W19", "W20"]
+        }
         ]
     }
 }
