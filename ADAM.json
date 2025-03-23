@@ -207,7 +207,15 @@
             "Parent": "Update Theta",
             "Ports": ["m", "v", "theta"],
             "Terminals": ["theta"]
-        }
+        },
+        {
+          "ID": "Theta Convergence Criteria",
+          "Name": "Theta Convergence Criteria",
+          "Description": "Convergence criteria based only on theta",
+          "Parent": "Convergence Criteria",
+          "Ports": ["m", "v", "t", "theta"],
+          "Terminals": ["m", "v", "t", "theta"]
+      }
         ],
         "Wires": [
           {
@@ -269,6 +277,18 @@
     "Parent": "v",
     "Source": {"Processor": "Exponential Smoothing Second Moment", "Index": 0},
     "Target": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 0}
+},
+{
+    "ID": "W11",
+    "Parent": "g",
+    "Source": {"Processor": "Get Function Gradients", "Index": 0},
+    "Target": {"Processor": "Exponential Smoothing First Moment", "Index": 1}
+},
+{
+    "ID": "W12",
+    "Parent": "g",
+    "Source": {"Processor": "Get Function Gradients", "Index": 0},
+    "Target": {"Processor": "Exponential Smoothing Second Moment", "Index": 1}
 }
         ],
         "Systems": [
@@ -278,6 +298,21 @@
             "Description": "The system representing the ADAM algorithm",
             "Processors": ["ADAM Initialization", "ADAM Update Loop"],
             "Wires": ["W1", "W2", "W3", "W4"]
+        },
+        {
+            "ID": "ADAM Update Step System",
+            "Name": "ADAM Update Step System",
+            "Description": "A single iteration of the ADAM optimization algorithm",
+            "Processors": [
+                "Get Function Gradients",
+                "Exponential Smoothing First Moment",
+                "Exponential Smoothing Second Moment",
+                "Increment Timestep",
+                "Exponential Decay First Moment Bias Correction",
+                "Exponential Decay Second Moment Bias Correction",
+                "ADAM Theta Update"
+            ],
+            "Wires": ["W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12"]
         }
         ]
     }

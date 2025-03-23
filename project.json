@@ -382,14 +382,6 @@
                   "Terminals": [
                     "Evaluation Metrics"
                   ]
-                },
-                {
-                    "ID": "Theta Convergence Criteria",
-                    "Name": "Theta Convergence Criteria",
-                    "Description": "Convergence criteria based only on theta",
-                    "Parent": "Convergence Criteria",
-                    "Ports": ["m", "v", "t", "theta"],
-                    "Terminals": ["m", "v", "t", "theta"]
                 }
         ],
         "Wires": [
