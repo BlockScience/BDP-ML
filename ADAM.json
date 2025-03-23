@@ -233,7 +233,43 @@
       "Parent": "t",
       "Source": {"Processor": "ADAM Initialization", "Index": 3},
       "Target": {"Processor": "ADAM Update Loop", "Index": 3}
-  }
+  },
+  {
+    "ID": "W5",
+    "Parent": "m",
+    "Source": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 0},
+    "Target": {"Processor": "ADAM Theta Update", "Index": 0}
+},
+{
+    "ID": "W6",
+    "Parent": "v",
+    "Source": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 0},
+    "Target": {"Processor": "ADAM Theta Update", "Index": 1}
+},
+{
+    "ID": "W7",
+    "Parent": "t",
+    "Source": {"Processor": "Increment Timestep", "Index": 0},
+    "Target": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 1}
+},
+{
+    "ID": "W8",
+    "Parent": "t",
+    "Source": {"Processor": "Increment Timestep", "Index": 0},
+    "Target": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 1}
+},
+{
+    "ID": "W9",
+    "Parent": "m",
+    "Source": {"Processor": "Exponential Smoothing First Moment", "Index": 0},
+    "Target": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 0}
+},
+{
+    "ID": "W10",
+    "Parent": "v",
+    "Source": {"Processor": "Exponential Smoothing Second Moment", "Index": 0},
+    "Target": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 0}
+}
         ],
         "Systems": [
           {
