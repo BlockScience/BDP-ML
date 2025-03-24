@@ -1,0 +1,185 @@
+{
+    "Toolbox": {
+        "Spaces": [
+            {
+                "ID": "Activation Vector",
+                "Name": "Activation Vector",
+                "Description": "A vector of activations"
+            }
+        ],
+        "Blocks": [
+            {
+                "ID": "Weighted Sum",
+                "Name": "Weighted Sum",
+                "Description": "Applies weights to the input vector and adds a bias term",
+                "Domain": ["Activation Vector"],
+                "Codomain": ["Activation Vector"]
+            }
+        ]
+    },
+    "Workbench": {
+        "Processors": [
+            {
+                "ID": "Weighted Sum 1",
+                "Name": "Weighted Sum 1",
+                "Description": "The first weighted sum",
+                "Parent": "Weighted Sum",
+                "Ports": ["Activation Vector"],
+                "Terminals": ["Activation Vector"]
+            }
+        ],
+        "Wires": [
+          {
+            "ID": "W1",
+            "Parent": "theta",
+            "Source": {"Processor": "ADAM Initialization", "Index": 0},
+            "Target": {"Processor": "ADAM Update Loop", "Index": 0}
+        },
+        {
+          "ID": "W2",
+          "Parent": "m",
+          "Source": {"Processor": "ADAM Initialization", "Index": 1},
+          "Target": {"Processor": "ADAM Update Loop", "Index": 1}
+      },
+      {
+        "ID": "W3",
+        "Parent": "v",
+        "Source": {"Processor": "ADAM Initialization", "Index": 2},
+        "Target": {"Processor": "ADAM Update Loop", "Index": 2}
+    },
+    {
+      "ID": "W4",
+      "Parent": "t",
+      "Source": {"Processor": "ADAM Initialization", "Index": 3},
+      "Target": {"Processor": "ADAM Update Loop", "Index": 3}
+  },
+  {
+    "ID": "W5",
+    "Parent": "m",
+    "Source": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 0},
+    "Target": {"Processor": "ADAM Theta Update", "Index": 0}
+},
+{
+    "ID": "W6",
+    "Parent": "v",
+    "Source": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 0},
+    "Target": {"Processor": "ADAM Theta Update", "Index": 1}
+},
+{
+    "ID": "W7",
+    "Parent": "t",
+    "Source": {"Processor": "Increment Timestep", "Index": 0},
+    "Target": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 1}
+},
+{
+    "ID": "W8",
+    "Parent": "t",
+    "Source": {"Processor": "Increment Timestep", "Index": 0},
+    "Target": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 1}
+},
+{
+    "ID": "W9",
+    "Parent": "m",
+    "Source": {"Processor": "Exponential Smoothing First Moment", "Index": 0},
+    "Target": {"Processor": "Exponential Decay First Moment Bias Correction", "Index": 0}
+},
+{
+    "ID": "W10",
+    "Parent": "v",
+    "Source": {"Processor": "Exponential Smoothing Second Moment", "Index": 0},
+    "Target": {"Processor": "Exponential Decay Second Moment Bias Correction", "Index": 0}
+},
+{
+    "ID": "W11",
+    "Parent": "g",
+    "Source": {"Processor": "Get Function Gradients", "Index": 0},
+    "Target": {"Processor": "Exponential Smoothing First Moment", "Index": 1}
+},
+{
+    "ID": "W12",
+    "Parent": "g",
+    "Source": {"Processor": "Get Function Gradients", "Index": 0},
+    "Target": {"Processor": "Exponential Smoothing Second Moment", "Index": 1}
+},
+{
+    "ID": "W13",
+    "Parent": "theta",
+    "Source": {"Processor": "ADAM Update Step", "Index": 0},
+    "Target": {"Processor": "Theta Convergence Criteria", "Index": 3}
+},
+{
+    "ID": "W14",
+    "Parent": "m",
+    "Source": {"Processor": "ADAM Update Step", "Index": 1},
+    "Target": {"Processor": "Theta Convergence Criteria", "Index": 0}
+},
+{
+    "ID": "W15",
+    "Parent": "v",
+    "Source": {"Processor": "ADAM Update Step", "Index": 2},
+    "Target": {"Processor": "Theta Convergence Criteria", "Index": 1}
+},
+{
+    "ID": "W16",
+    "Parent": "t",
+    "Source": {"Processor": "ADAM Update Step", "Index": 3},
+    "Target": {"Processor": "Theta Convergence Criteria", "Index": 2}
+},
+{
+    "ID": "W17",
+    "Parent": "theta",
+    "Source": {"Processor": "Theta Convergence Criteria", "Index": 3},
+    "Target": {"Processor": "ADAM Update Step", "Index": 0}
+},
+{
+    "ID": "W18",
+    "Parent": "m",
+    "Source": {"Processor": "Theta Convergence Criteria", "Index": 0},
+    "Target": {"Processor": "ADAM Update Step", "Index": 1}
+},
+{
+    "ID": "W19",
+    "Parent": "v",
+    "Source": {"Processor": "Theta Convergence Criteria", "Index": 1},
+    "Target": {"Processor": "ADAM Update Step", "Index": 2}
+},
+{
+    "ID": "W20",
+    "Parent": "t",
+    "Source": {"Processor": "Theta Convergence Criteria", "Index": 2},
+    "Target": {"Processor": "ADAM Update Step", "Index": 3}
+}
+        ],
+        "Systems": [
+          {
+            "ID": "ADAM System",
+            "Name": "ADAM System",
+            "Description": "The system representing the ADAM algorithm",
+            "Processors": ["ADAM Initialization", "ADAM Update Loop"],
+            "Wires": ["W1", "W2", "W3", "W4"]
+        },
+        {
+            "ID": "ADAM Update Step System",
+            "Name": "ADAM Update Step System",
+            "Description": "A single iteration of the ADAM optimization algorithm",
+            "Processors": [
+                "Get Function Gradients",
+                "Exponential Smoothing First Moment",
+                "Exponential Smoothing Second Moment",
+                "Increment Timestep",
+                "Exponential Decay First Moment Bias Correction",
+                "Exponential Decay Second Moment Bias Correction",
+                "ADAM Theta Update"
+            ],
+            "Wires": ["W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12"]
+        },
+        {
+            "ID": "ADAM Optimization Loop System",
+            "Name": "ADAM Optimization Loop System",
+            "Description": "The system representing the ADAM optimization loop with convergence checking",
+            "Processors": ["ADAM Update Step", "Theta Convergence Criteria"],
+            "Wires": ["W13", "W14", "W15", "W16", "W17", "W18", "W19", "W20"]
+        }
+        ]
+    }
+}
