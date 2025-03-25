@@ -2,9 +2,14 @@
     "Toolbox": {
         "Spaces": [
             {
-                "ID": "Activation Vector",
-                "Name": "Activation Vector",
+                "ID": "Vector",
+                "Name": "Vector",
                 "Description": "A vector of activations"
+            },
+            {
+                "ID": "Floating Point Number",
+                "Name": "Floating Point Number",
+                "Description": "A floating point number"
             }
         ],
         "Blocks": [
@@ -12,22 +17,29 @@
                 "ID": "Input Layer Forward",
                 "Name": "Input Layer Forward",
                 "Description": "The input layer to the network for forward propagation",
-                "Domain": ["Activation Vector"],
-                "Codomain": ["Activation Vector"]
+                "Domain": ["Vector"],
+                "Codomain": ["Vector"]
             },
             {
               "ID": "Sigmoid Layer Forward",
               "Name": "Sigmoid Layer Forward",
               "Description": "Gets the weighted sum of the input activation + bias term and then applies the sigmoid activation function for forward propagation",
-              "Domain": ["Activation Vector"],
-              "Codomain": ["Activation Vector"]
+              "Domain": ["Vector"],
+              "Codomain": ["Vector"]
           },
           {
             "ID": "ReLU Layer Forward",
             "Name": "ReLU Layer Forward",
             "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
-            "Domain": ["Activation Vector"],
-            "Codomain": ["Activation Vector"]
+            "Domain": ["Vector"],
+            "Codomain": ["Vector"]
+        },
+        {
+            "ID": "Calculate Loss",
+            "Name": "Calculate Loss",
+            "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Floating Point Number"]
         }
         ]
     },
@@ -38,22 +50,30 @@
                 "Name": "Basic Input Layer Forward",
                 "Description": "Basic input layer to the network that just passes the starting vector through for forward propagation",
                 "Parent": "Input Layer Forward",
-                "Ports": ["Activation Vector"],
-                "Terminals": ["Activation Vector"]
+                "Ports": ["Vector"],
+                "Terminals": ["Vector"]
             },
             {
                 "ID": "Sigmoid Hidden Layer 1 Forward",
                 "Name": "Sigmoid Hidden Layer 1 Forward",
                 "Description": "A sigmoid layer as the first hidden layer for forward propagation",
                 "Parent": "Sigmoid Layer Forward",
-                "Ports": ["Activation Vector"],
-                "Terminals": ["Activation Vector"]
+                "Ports": ["Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Mean Squared Error",
+                "Name": "Mean Squared Error",
+                "Description": "Calculates the mean squared error between two vectors",
+                "Parent": "Calculate Loss",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Floating Point Number"]
             }
         ],
         "Wires": [
           {
             "ID": "I-S1 Forward",
-            "Parent": "Activation Vector",
+            "Parent": "Vector",
             "Source": {"Processor": "Basic Input Layer Forward", "Index": 0},
             "Target": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0}
         }
