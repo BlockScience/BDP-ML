@@ -68,7 +68,12 @@
             "Description": "The derivative of the loss function",
             "Domain": ["Vector", "Vector"],
             "Codomain": ["Vector"]
-        }
+        },
+        {"Codomain": ["Floating Point Number"],
+ "Description": "Composite processor block for ANN Input-Sigmoid forward pass",
+ "Domain": ["Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Forward Block",
+ "Name": "ANN Input-Sigmoid Forward Block"}
         ]
     },
     "Workbench": {
@@ -120,7 +125,20 @@
                 "Parent": "Input Layer Backpropagation",
                 "Ports": ["Vector", "Vector"],
                 "Terminals": ["Vector"]
-            }
+            },
+            {"Description": "",
+ "ID": "ANN Input-Sigmoid Forward",
+ "Name": "ANN Input-Sigmoid Forward",
+ "Parent": "ANN Input-Sigmoid Forward Block",
+ "Ports": ["Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "Basic Input Layer Forward"},
+                                 {"Index": 1,
+                                  "Processor": "Mean Squared Error"}],
+               "System ID": "ANN Input-Sigmoid Forward System",
+               "Terminal Mappings": [{"Index": 0,
+                                      "Processor": "Mean Squared Error"}]},
+ "Terminals": ["Floating Point Number"]}
         ],
         "Wires": [
           {
@@ -150,15 +168,15 @@
         ],
         "Systems": [
           {
-            "ID": "ANN Input-Sigmoid Forward",
-            "Name": "ANN Input-Sigmoid Forward",
+            "ID": "ANN Input-Sigmoid Forward System",
+            "Name": "ANN Input-Sigmoid Forward System",
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for forward propagation",
             "Processors": ["Basic Input Layer Forward", "Sigmoid Hidden Layer 1 Forward", "Mean Squared Error"],
             "Wires": ["I-S1 Forward", "S1-MSE Forward"]
         },
         {
-            "ID": "ANN Input-Sigmoid Backpropagation",
-            "Name": "ANN Input-Sigmoid Backpropagation",
+            "ID": "ANN Input-Sigmoid Backpropagation System",
+            "Name": "ANN Input-Sigmoid Backpropagation System",
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for backpropagation",
             "Processors": ["Mean Squared Error Derivative", "Sigmoid Hidden Layer 1 Backpropagation", "Basic Input Layer Backpropagation"],
             "Wires": ["MSE-S1 Backward", "S1-I Backward"]
