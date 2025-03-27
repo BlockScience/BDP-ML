@@ -82,8 +82,8 @@
  {"Codomain": ["Floating Point Number"],
  "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
  "Domain": ["Vector", "Vector", "Vector"],
- "ID": "ANN Input-Sigmoid Epoch System-CP Block",
- "Name": "ANN Input-Sigmoid Epoch System-CP Block"}
+ "ID": "ANN Input-Sigmoid Epoch Block",
+ "Name": "ANN Input-Sigmoid Epoch Block"}
         ]
     },
     "Workbench": {
@@ -172,9 +172,9 @@
                "Terminal Mappings": []},
  "Terminals": []},
  {"Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
- "ID": "ANN Input-Sigmoid Epoch System-CP",
- "Name": "ANN Input-Sigmoid Epoch System-CP",
- "Parent": "ANN Input-Sigmoid Epoch System-CP Block",
+ "ID": "ANN Input-Sigmoid Epoch",
+ "Name": "ANN Input-Sigmoid Epoch",
+ "Parent": "ANN Input-Sigmoid Epoch Block",
  "Ports": ["Vector", "Vector", "Vector"],
  "Subsystem": {"Port Mappings": [{"Index": 0,
                                   "Processor": "ANN Input-Sigmoid Forward"},
