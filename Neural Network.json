@@ -24,7 +24,7 @@
                 "ID": "Input Layer Backpropagation",
                 "Name": "Input Layer Backpropagation",
                 "Description": "",
-                "Domain": ["Vector"],
+                "Domain": ["Vector", "Vector"],
                 "Codomain": ["Vector"]
             },
             {
@@ -38,7 +38,7 @@
             "ID": "Sigmoid Layer Backpropagation",
             "Name": "Sigmoid Layer Backpropagation",
             "Description": "",
-            "Domain": ["Vector"],
+            "Domain": ["Vector", "Vector"],
             "Codomain": ["Vector"]
         },
           {
@@ -52,7 +52,7 @@
             "ID": "ReLU Layer Backpropagation",
             "Name": "ReLU Layer Backpropagation",
             "Description": "",
-            "Domain": ["Vector"],
+            "Domain": ["Vector", "Vector"],
             "Codomain": ["Vector"]
         },
         {
@@ -104,6 +104,22 @@
                 "Parent": "Loss Function Derivative",
                 "Ports": ["Vector", "Vector"],
                 "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Sigmoid Hidden Layer 1 Backpropagation",
+                "Name": "Sigmoid Hidden Layer 1 Backpropagation",
+                "Description": "",
+                "Parent": "Sigmoid Layer Backpropagation",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Basic Input Layer Backpropagation",
+                "Name": "Basic Input Layer Backpropagation",
+                "Description": "Basic input layer to the network that just passes the starting vector through for backpropagation",
+                "Parent": "Input Layer Backpropagation",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Vector"]
             }
         ],
         "Wires": [
@@ -118,6 +134,18 @@
             "Parent": "Vector",
             "Source": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0},
             "Target": {"Processor": "Mean Squared Error", "Index": 0}
+        },
+        {
+            "ID": "MSE-S1 Backward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Mean Squared Error Derivative", "Index": 0},
+            "Target": {"Processor": "Sigmoid Hidden Layer 1 Backpropagation", "Index": 0}
+        },
+        {
+            "ID": "S1-I Backward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Sigmoid Hidden Layer 1 Backpropagation", "Index": 0},
+            "Target": {"Processor": "Basic Input Layer Backpropagation", "Index": 0}
         }
         ],
         "Systems": [
@@ -132,8 +160,8 @@
             "ID": "ANN Input-Sigmoid Backpropagation",
             "Name": "ANN Input-Sigmoid Backpropagation",
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for backpropagation",
-            "Processors": ["Mean Squared Error Derivative"],
-            "Wires": []
+            "Processors": ["Mean Squared Error Derivative", "Sigmoid Hidden Layer 1 Backpropagation", "Basic Input Layer Backpropagation"],
+            "Wires": ["MSE-S1 Backward", "S1-I Backward"]
         }
         ]
     }
