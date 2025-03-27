@@ -207,6 +207,13 @@
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for backpropagation",
             "Processors": ["Mean Squared Error Derivative", "Sigmoid Hidden Layer 1 Backpropagation", "Basic Input Layer Backpropagation"],
             "Wires": ["MSE-S1 Backward", "S1-I Backward"]
+        },
+        {
+            "ID": "ANN Input-Sigmoid Epoch System",
+            "Name": "ANN Input-Sigmoid Epoch System",
+            "Description": "",
+            "Processors": ["ANN Input-Sigmoid Forward", "ANN Input-Sigmoid Backpropagation"],
+            "Wires": []
         }
         ]
     }
