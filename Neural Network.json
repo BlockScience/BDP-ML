@@ -191,6 +191,24 @@
             "Parent": "Vector",
             "Source": {"Processor": "Sigmoid Hidden Layer 1 Backpropagation", "Index": 0},
             "Target": {"Processor": "Basic Input Layer Backpropagation", "Index": 0}
+        },
+        {
+            "ID": "W1",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 1},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 3}
+        },
+        {
+            "ID": "W2",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 2},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 1}
+        },
+        {
+            "ID": "W3",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 3},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 2}
         }
         ],
         "Systems": [
@@ -213,7 +231,7 @@
             "Name": "ANN Input-Sigmoid Epoch System",
             "Description": "",
             "Processors": ["ANN Input-Sigmoid Forward", "ANN Input-Sigmoid Backpropagation"],
-            "Wires": []
+            "Wires": ["W1", "W2", "W3"]
         }
         ]
     }
