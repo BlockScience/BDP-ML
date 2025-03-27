@@ -78,7 +78,12 @@
  "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Backpropagation System",
  "Domain": ["Vector", "Vector", "Vector", "Vector"],
  "ID": "ANN Input-Sigmoid Backpropagation Block",
- "Name": "ANN Input-Sigmoid Backpropagation Block"}
+ "Name": "ANN Input-Sigmoid Backpropagation Block"},
+ {"Codomain": ["Floating Point Number"],
+ "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
+ "Domain": ["Vector", "Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Epoch System-CP Block",
+ "Name": "ANN Input-Sigmoid Epoch System-CP Block"}
         ]
     },
     "Workbench": {
@@ -165,7 +170,22 @@
                                   "Processor": "Basic Input Layer Backpropagation"}],
                "System ID": "ANN Input-Sigmoid Backpropagation System",
                "Terminal Mappings": []},
- "Terminals": []}
+ "Terminals": []},
+ {"Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
+ "ID": "ANN Input-Sigmoid Epoch System-CP",
+ "Name": "ANN Input-Sigmoid Epoch System-CP",
+ "Parent": "ANN Input-Sigmoid Epoch System-CP Block",
+ "Ports": ["Vector", "Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "ANN Input-Sigmoid Forward"},
+                                 {"Index": 1,
+                                  "Processor": "ANN Input-Sigmoid Forward"},
+                                 {"Index": 0,
+                                  "Processor": "ANN Input-Sigmoid Backpropagation"}],
+               "System ID": "ANN Input-Sigmoid Epoch System",
+               "Terminal Mappings": [{"Index": 0,
+                                      "Processor": "ANN Input-Sigmoid Forward"}]},
+ "Terminals": ["Floating Point Number"]}
         ],
         "Wires": [
           {
