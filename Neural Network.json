@@ -21,6 +21,13 @@
                 "Codomain": ["Vector"]
             },
             {
+                "ID": "Input Layer Backpropagation",
+                "Name": "Input Layer Backpropagation",
+                "Description": "",
+                "Domain": ["Vector"],
+                "Codomain": ["Vector"]
+            },
+            {
               "ID": "Sigmoid Layer Forward",
               "Name": "Sigmoid Layer Forward",
               "Description": "Gets the weighted sum of the input activation + bias term and then applies the sigmoid activation function for forward propagation",
@@ -28,9 +35,23 @@
               "Codomain": ["Vector"]
           },
           {
+            "ID": "Sigmoid Layer Backpropagation",
+            "Name": "Sigmoid Layer Backpropagation",
+            "Description": "",
+            "Domain": ["Vector"],
+            "Codomain": ["Vector"]
+        },
+          {
             "ID": "ReLU Layer Forward",
             "Name": "ReLU Layer Forward",
             "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
+            "Domain": ["Vector"],
+            "Codomain": ["Vector"]
+        },
+        {
+            "ID": "ReLU Layer Backpropagation",
+            "Name": "ReLU Layer Backpropagation",
+            "Description": "",
             "Domain": ["Vector"],
             "Codomain": ["Vector"]
         },
@@ -64,7 +85,7 @@
             {
                 "ID": "Mean Squared Error",
                 "Name": "Mean Squared Error",
-                "Description": "Calculates the mean squared error between two vectors",
+                "Description": "Calculates the mean squared error between two vectors, 1/2 (Y-Activation Vector)^2",
                 "Parent": "Calculate Loss",
                 "Ports": ["Vector", "Vector"],
                 "Terminals": ["Floating Point Number"]
@@ -76,6 +97,12 @@
             "Parent": "Vector",
             "Source": {"Processor": "Basic Input Layer Forward", "Index": 0},
             "Target": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0}
+        },
+        {
+            "ID": "S1-MSE Forward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0},
+            "Target": {"Processor": "Mean Squared Error", "Index": 0}
         }
         ],
         "Systems": [
@@ -83,8 +110,8 @@
             "ID": "ANN Input-Sigmoid Forward",
             "Name": "ANN Input-Sigmoid Forward",
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for forward propagation",
-            "Processors": ["Basic Input Layer Forward", "Sigmoid Hidden Layer 1 Forward"],
-            "Wires": ["I-S1 Forward"]
+            "Processors": ["Basic Input Layer Forward", "Sigmoid Hidden Layer 1 Forward", "Mean Squared Error"],
+            "Wires": ["I-S1 Forward", "S1-MSE Forward"]
         }
         ]
     }
