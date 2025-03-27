@@ -61,6 +61,13 @@
             "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
             "Domain": ["Vector", "Vector"],
             "Codomain": ["Floating Point Number"]
+        },
+        {
+            "ID": "Loss Function Derivative",
+            "Name": "Loss Function Derivative",
+            "Description": "The derivative of the loss function",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Vector"]
         }
         ]
     },
@@ -89,6 +96,14 @@
                 "Parent": "Calculate Loss",
                 "Ports": ["Vector", "Vector"],
                 "Terminals": ["Floating Point Number"]
+            },
+            {
+                "ID": "Mean Squared Error Derivative",
+                "Name": "Mean Squared Error Derivative",
+                "Description": "Calculates the derivative of the mean squared error between two vectors, Activation Vector-Y",
+                "Parent": "Loss Function Derivative",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Vector"]
             }
         ],
         "Wires": [
@@ -112,6 +127,13 @@
             "Description": "A simple artifical neural network with an input layer and a sigmoid layer for forward propagation",
             "Processors": ["Basic Input Layer Forward", "Sigmoid Hidden Layer 1 Forward", "Mean Squared Error"],
             "Wires": ["I-S1 Forward", "S1-MSE Forward"]
+        },
+        {
+            "ID": "ANN Input-Sigmoid Backpropagation",
+            "Name": "ANN Input-Sigmoid Backpropagation",
+            "Description": "A simple artifical neural network with an input layer and a sigmoid layer for backpropagation",
+            "Processors": ["Mean Squared Error Derivative"],
+            "Wires": []
         }
         ]
     }
