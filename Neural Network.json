@@ -73,7 +73,12 @@
  "Description": "Composite processor block for ANN Input-Sigmoid forward pass",
  "Domain": ["Vector", "Vector"],
  "ID": "ANN Input-Sigmoid Forward Block",
- "Name": "ANN Input-Sigmoid Forward Block"}
+ "Name": "ANN Input-Sigmoid Forward Block"},
+ {"Codomain": ["Vector"],
+ "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Backpropagation System",
+ "Domain": ["Vector", "Vector", "Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Backpropagation Block",
+ "Name": "ANN Input-Sigmoid Backpropagation Block"}
         ]
     },
     "Workbench": {
@@ -138,7 +143,24 @@
                "System ID": "ANN Input-Sigmoid Forward System",
                "Terminal Mappings": [{"Index": 0,
                                       "Processor": "Mean Squared Error"}]},
- "Terminals": ["Floating Point Number"]}
+ "Terminals": ["Floating Point Number"]},
+ {"Description": "A lazy loaded composite processor block for ANN Input-Sigmoid ",
+ "ID": "ANN Input-Sigmoid Backpropagation",
+ "Name": "ANN Input-Sigmoid Backpropagation",
+ "Parent": "ANN Input-Sigmoid Backpropagation Block",
+ "Ports": ["Vector", "Vector", "Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "Mean Squared Error Derivative"},
+                                 {"Index": 1,
+                                  "Processor": "Mean Squared Error Derivative"},
+                                 {"Index": 1,
+                                  "Processor": "Sigmoid Hidden Layer 1 Backpropagation"},
+                                 {"Index": 1,
+                                  "Processor": "Basic Input Layer Backpropagation"}],
+               "System ID": "ANN Input-Sigmoid Backpropagation System",
+               "Terminal Mappings": [{"Index": 0,
+                                      "Processor": "Basic Input Layer Backpropagation"}]},
+ "Terminals": ["Vector"]}
         ],
         "Wires": [
           {
