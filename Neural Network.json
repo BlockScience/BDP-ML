@@ -1,0 +1,258 @@
+{
+    "Toolbox": {
+        "Spaces": [
+            {
+                "ID": "Vector",
+                "Name": "Vector",
+                "Description": "A vector of activations"
+            },
+            {
+                "ID": "Floating Point Number",
+                "Name": "Floating Point Number",
+                "Description": "A floating point number"
+            }
+        ],
+        "Blocks": [
+            {
+                "ID": "Input Layer Forward",
+                "Name": "Input Layer Forward",
+                "Description": "The input layer to the network for forward propagation",
+                "Domain": ["Vector"],
+                "Codomain": ["Vector"]
+            },
+            {
+                "ID": "Input Layer Backpropagation",
+                "Name": "Input Layer Backpropagation",
+                "Description": "",
+                "Domain": ["Vector", "Vector"],
+                "Codomain": []
+            },
+            {
+              "ID": "Sigmoid Layer Forward",
+              "Name": "Sigmoid Layer Forward",
+              "Description": "Gets the weighted sum of the input activation + bias term and then applies the sigmoid activation function for forward propagation",
+              "Domain": ["Vector"],
+              "Codomain": ["Vector"]
+          },
+          {
+            "ID": "Sigmoid Layer Backpropagation",
+            "Name": "Sigmoid Layer Backpropagation",
+            "Description": "",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Vector"]
+        },
+          {
+            "ID": "ReLU Layer Forward",
+            "Name": "ReLU Layer Forward",
+            "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
+            "Domain": ["Vector"],
+            "Codomain": ["Vector"]
+        },
+        {
+            "ID": "ReLU Layer Backpropagation",
+            "Name": "ReLU Layer Backpropagation",
+            "Description": "",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Vector"]
+        },
+        {
+            "ID": "Calculate Loss",
+            "Name": "Calculate Loss",
+            "Description": "Gets the weighted sum of the input activation + bias term and then applies the ReLU activation function for forward propagation",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Floating Point Number"]
+        },
+        {
+            "ID": "Loss Function Derivative",
+            "Name": "Loss Function Derivative",
+            "Description": "The derivative of the loss function",
+            "Domain": ["Vector", "Vector"],
+            "Codomain": ["Vector"]
+        },
+        {"Codomain": ["Floating Point Number", "Vector", "Vector", "Vector"],
+ "Description": "Composite processor block for ANN Input-Sigmoid forward pass",
+ "Domain": ["Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Forward Block",
+ "Name": "ANN Input-Sigmoid Forward Block"},
+ {"Codomain": [],
+ "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Backpropagation System",
+ "Domain": ["Vector", "Vector", "Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Backpropagation Block",
+ "Name": "ANN Input-Sigmoid Backpropagation Block"},
+ {"Codomain": ["Floating Point Number"],
+ "Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
+ "Domain": ["Vector", "Vector", "Vector"],
+ "ID": "ANN Input-Sigmoid Epoch Block",
+ "Name": "ANN Input-Sigmoid Epoch Block"}
+        ]
+    },
+    "Workbench": {
+        "Processors": [
+            {
+                "ID": "Basic Input Layer Forward",
+                "Name": "Basic Input Layer Forward",
+                "Description": "Basic input layer to the network that just passes the starting vector through for forward propagation",
+                "Parent": "Input Layer Forward",
+                "Ports": ["Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Sigmoid Hidden Layer 1 Forward",
+                "Name": "Sigmoid Hidden Layer 1 Forward",
+                "Description": "A sigmoid layer as the first hidden layer for forward propagation",
+                "Parent": "Sigmoid Layer Forward",
+                "Ports": ["Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Mean Squared Error",
+                "Name": "Mean Squared Error",
+                "Description": "Calculates the mean squared error between two vectors, 1/2 (Y-Activation Vector)^2",
+                "Parent": "Calculate Loss",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Floating Point Number"]
+            },
+            {
+                "ID": "Mean Squared Error Derivative",
+                "Name": "Mean Squared Error Derivative",
+                "Description": "Calculates the derivative of the mean squared error between two vectors, Activation Vector-Y",
+                "Parent": "Loss Function Derivative",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Sigmoid Hidden Layer 1 Backpropagation",
+                "Name": "Sigmoid Hidden Layer 1 Backpropagation",
+                "Description": "",
+                "Parent": "Sigmoid Layer Backpropagation",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": ["Vector"]
+            },
+            {
+                "ID": "Basic Input Layer Backpropagation",
+                "Name": "Basic Input Layer Backpropagation",
+                "Description": "Basic input layer to the network that just passes the starting vector through for backpropagation",
+                "Parent": "Input Layer Backpropagation",
+                "Ports": ["Vector", "Vector"],
+                "Terminals": []
+            },
+            {"Description": "",
+ "ID": "ANN Input-Sigmoid Forward",
+ "Name": "ANN Input-Sigmoid Forward",
+ "Parent": "ANN Input-Sigmoid Forward Block",
+ "Ports": ["Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "Basic Input Layer Forward"},
+                                 {"Index": 1,
+                                  "Processor": "Mean Squared Error"}],
+               "System ID": "ANN Input-Sigmoid Forward System",
+               "Terminal Mappings": [{"Index": 0,
+                                      "Processor": "Mean Squared Error"},
+                                      {"Index": 0,
+                                      "Processor": "Basic Input Layer Forward"},
+                                      {"Index": 0,
+                                      "Processor": "Sigmoid Hidden Layer 1 Forward"},
+                                      {"Index": 0,
+                                      "Processor": "Sigmoid Hidden Layer 1 Forward"}]},
+ "Terminals": ["Floating Point Number", "Vector", "Vector", "Vector"]},
+ {"Description": "A lazy loaded composite processor block for ANN Input-Sigmoid ",
+ "ID": "ANN Input-Sigmoid Backpropagation",
+ "Name": "ANN Input-Sigmoid Backpropagation",
+ "Parent": "ANN Input-Sigmoid Backpropagation Block",
+ "Ports": ["Vector", "Vector", "Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "Mean Squared Error Derivative"},
+                                 {"Index": 1,
+                                  "Processor": "Mean Squared Error Derivative"},
+                                 {"Index": 1,
+                                  "Processor": "Sigmoid Hidden Layer 1 Backpropagation"},
+                                 {"Index": 1,
+                                  "Processor": "Basic Input Layer Backpropagation"}],
+               "System ID": "ANN Input-Sigmoid Backpropagation System",
+               "Terminal Mappings": []},
+ "Terminals": []},
+ {"Description": "A lazy loaded composite processor block for ANN Input-Sigmoid Epoch System",
+ "ID": "ANN Input-Sigmoid Epoch",
+ "Name": "ANN Input-Sigmoid Epoch",
+ "Parent": "ANN Input-Sigmoid Epoch Block",
+ "Ports": ["Vector", "Vector", "Vector"],
+ "Subsystem": {"Port Mappings": [{"Index": 0,
+                                  "Processor": "ANN Input-Sigmoid Forward"},
+                                 {"Index": 1,
+                                  "Processor": "ANN Input-Sigmoid Forward"},
+                                 {"Index": 0,
+                                  "Processor": "ANN Input-Sigmoid Backpropagation"}],
+               "System ID": "ANN Input-Sigmoid Epoch System",
+               "Terminal Mappings": [{"Index": 0,
+                                      "Processor": "ANN Input-Sigmoid Forward"}]},
+ "Terminals": ["Floating Point Number"]}
+        ],
+        "Wires": [
+          {
+            "ID": "I-S1 Forward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Basic Input Layer Forward", "Index": 0},
+            "Target": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0}
+        },
+        {
+            "ID": "S1-MSE Forward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Sigmoid Hidden Layer 1 Forward", "Index": 0},
+            "Target": {"Processor": "Mean Squared Error", "Index": 0}
+        },
+        {
+            "ID": "MSE-S1 Backward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Mean Squared Error Derivative", "Index": 0},
+            "Target": {"Processor": "Sigmoid Hidden Layer 1 Backpropagation", "Index": 0}
+        },
+        {
+            "ID": "S1-I Backward",
+            "Parent": "Vector",
+            "Source": {"Processor": "Sigmoid Hidden Layer 1 Backpropagation", "Index": 0},
+            "Target": {"Processor": "Basic Input Layer Backpropagation", "Index": 0}
+        },
+        {
+            "ID": "W1",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 1},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 3}
+        },
+        {
+            "ID": "W2",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 2},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 1}
+        },
+        {
+            "ID": "W3",
+            "Parent": "Vector",
+            "Source": {"Processor": "ANN Input-Sigmoid Forward", "Index": 3},
+            "Target": {"Processor": "ANN Input-Sigmoid Backpropagation", "Index": 2}
+        }
+        ],
+        "Systems": [
+          {
+            "ID": "ANN Input-Sigmoid Forward System",
+            "Name": "ANN Input-Sigmoid Forward System",
+            "Description": "A simple artifical neural network with an input layer and a sigmoid layer for forward propagation",
+            "Processors": ["Basic Input Layer Forward", "Sigmoid Hidden Layer 1 Forward", "Mean Squared Error"],
+            "Wires": ["I-S1 Forward", "S1-MSE Forward"]
+        },
+        {
+            "ID": "ANN Input-Sigmoid Backpropagation System",
+            "Name": "ANN Input-Sigmoid Backpropagation System",
+            "Description": "A simple artifical neural network with an input layer and a sigmoid layer for backpropagation",
+            "Processors": ["Mean Squared Error Derivative", "Sigmoid Hidden Layer 1 Backpropagation", "Basic Input Layer Backpropagation"],
+            "Wires": ["MSE-S1 Backward", "S1-I Backward"]
+        },
+        {
+            "ID": "ANN Input-Sigmoid Epoch System",
+            "Name": "ANN Input-Sigmoid Epoch System",
+            "Description": "",
+            "Processors": ["ANN Input-Sigmoid Forward", "ANN Input-Sigmoid Backpropagation"],
+            "Wires": ["W1", "W2", "W3"]
+        }
+        ]
+    }
+}
