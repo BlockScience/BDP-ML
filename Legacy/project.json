@@ -32,16 +32,6 @@
                 "Description": "An array of Y testing data"
             },
             {
-                "ID": "Model",
-                "Name": "Model",
-                "Description": "A machine learning model"
-            },
-            {
-                "ID": "Evaluation Metrics",
-                "Name": "Evaluation Metrics",
-                "Description": "Metrics for evaluating the model"
-            },
-            {
                 "ID": "m",
                 "Name": "m",
                 "Description": "First moment estimate"
@@ -136,14 +126,7 @@
                 ],
                 "ID": "Supervised Learning",
                 "Name": "Supervised Learning"
-              },
-                {
-                    "ID": "Experiment",
-                    "Name": "Experiment",
-                    "Description": "A machine learning experiment",
-                    "Domain": ["Model"],
-                    "Codomain": ["Evaluation Metrics"]
-                }
+              }
         ]
     },
     "Workbench": {
@@ -279,33 +262,6 @@
                         {
                           "Index": 0,
                           "Processor": "No Post-processing"
-                        }
-                      ]
-                    },
-                    "Terminals": [
-                      "Evaluation Metrics"
-                    ]
-                  },
-                  {
-                    "Description": "Runs experiments on the MNIST dataset",
-                    "ID": "MNIST Experiment",
-                    "Name": "MNIST Experiment",
-                    "Parent": "Experiment",
-                    "Ports": [
-                      "Model"
-                    ],
-                    "Subsystem": {
-                      "Port Mappings": [
-                        {
-                          "Index": 0,
-                          "Processor": "Default Supervised Learning"
-                        }
-                      ],
-                      "System ID": "MNIST Experiment System",
-                      "Terminal Mappings": [
-                        {
-                          "Index": 0,
-                          "Processor": "Default Supervised Learning"
                         }
                       ]
                     },
