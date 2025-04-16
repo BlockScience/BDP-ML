@@ -406,13 +406,6 @@
         "Wires": ["W9", "W10"]
       },
       {
-        "ID": "MNIST Experiment System",
-        "Name": "MNIST Experiment System",
-        "Description": "The system representing the entire machine learning experiment for the MNIST dataset",
-        "Processors": ["Load MNIST", "Default Supervised Learning"],
-        "Wires": ["W11", "W12", "W13", "W14"]
-      },
-      {
         "ID": "Load ImageNet System",
         "Name": "Load ImageNet System",
         "Description": "The system representing loading the ImageNet dataset, preparing the cross validation split, and pre-processing the data",
