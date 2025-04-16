@@ -1,0 +1,429 @@
+{
+  "Toolbox": {
+    "Spaces": [
+      {
+        "ID": "X",
+        "Name": "X",
+        "Description": "X Data"
+      },
+      {
+        "ID": "Y",
+        "Name": "Y",
+        "Description": "Y Data"
+      },
+      {
+        "ID": "m",
+        "Name": "m",
+        "Description": "First moment estimate"
+      },
+      {
+        "ID": "v",
+        "Name": "v",
+        "Description": "Second moment estimate"
+      },
+      {
+        "ID": "t",
+        "Name": "t",
+        "Description": "Timestep"
+      },
+      {
+        "ID": "theta",
+        "Name": "theta",
+        "Description": "Model parameters"
+      },
+      {
+        "ID": "g",
+        "Name": "g",
+        "Description": "Gradients"
+      }
+    ],
+    "Blocks": [
+      {
+        "ID": "Load Supervised Dataset",
+        "Name": "Load Supervised Dataset",
+        "Description": "Loads the data for a supervised learning problem",
+        "Domain": [],
+        "Codomain": ["X", "Y"]
+      },
+      {
+        "ID": "Cross Validation Split",
+        "Name": "Cross Validation Split",
+        "Description": "Splits data into training and testing sets",
+        "Domain": ["X", "Y"],
+        "Codomain": [
+          "X Train Array",
+          "Y Train Array",
+          "X Test Array",
+          "Y Test Array"
+        ]
+      },
+      {
+        "ID": "Training Data Preprocessing",
+        "Name": "Training Data Preprocessing",
+        "Description": "Preprocesses training data for model training",
+        "Domain": ["X Train Array", "Y Train Array"],
+        "Codomain": ["X Train Array", "Y Train Array"]
+      },
+      {
+        "ID": "Testing Data Preprocessing",
+        "Name": "Testing Data Preprocessing",
+        "Description": "Preprocesses testing data for model evaluation, optionally can use the training data in addition",
+        "Domain": [
+          "X Train Array",
+          "Y Train Array",
+          "X Test Array",
+          "Y Test Array"
+        ],
+        "Codomain": ["X Test Array", "Y Test Array"]
+      },
+
+      {
+        "ID": "Fit Supervised Model",
+        "Name": "Fit Supervised Model",
+        "Description": "Fits a model to the training data",
+        "Domain": ["Model", "X Train Array", "Y Train Array"],
+        "Codomain": ["Model"]
+      },
+      {
+        "ID": "Evaluate Supervised Model",
+        "Name": "Evaluate Supervised Model",
+        "Description": "Evaluates the model based on the test data",
+        "Domain": ["Model", "X Test Array", "Y Test Array"],
+        "Codomain": ["Evaluation Metrics"]
+      },
+      {
+        "ID": "Post-processing",
+        "Name": "Post-processing",
+        "Description": "The block for taking care of any post-processing of metrics",
+        "Domain": ["Evaluation Metrics"],
+        "Codomain": ["Evaluation Metrics"]
+      }
+    ]
+  },
+  "Workbench": {
+    "Processors": [
+      {
+        "ID": "Load MNIST Dataset",
+        "Name": "Load MNIST Dataset",
+        "Description": "Loads the MNSIT dataset",
+        "Parent": "Load Supervised Dataset",
+        "Ports": [],
+        "Terminals": ["X", "Y"]
+      },
+      {
+        "ID": "Test-Train Split",
+        "Name": "Test-Train Split",
+        "Description": "Splits data into one training and one test set",
+        "Parent": "Cross Validation Split",
+        "Ports": ["X", "Y"],
+        "Terminals": [
+          "X Train Array",
+          "Y Train Array",
+          "X Test Array",
+          "Y Test Array"
+        ]
+      },
+      {
+        "ID": "Image Normalization Preprocessing - Training",
+        "Name": "Image Normalization Preprocessing - Training",
+        "Description": "Preprocessesing for image based training data",
+        "Parent": "Training Data Preprocessing",
+        "Ports": ["X Train Array", "Y Train Array"],
+        "Terminals": ["X Train Array", "Y Train Array"]
+      },
+      {
+        "ID": "Image Normalization Preprocessing - Testing",
+        "Name": "Image Normalization Preprocessing - Testing",
+        "Description": "Preprocesses testing data for model evaluation",
+        "Parent": "Testing Data Preprocessing",
+        "Ports": [
+          "X Train Array",
+          "Y Train Array",
+          "X Test Array",
+          "Y Test Array"
+        ],
+        "Terminals": ["X Test Array", "Y Test Array"]
+      },
+      {
+        "ID": "Fit Supervised Model - Default",
+        "Name": "Fit Supervised Model - Default",
+        "Description": "Fits a model to the training data based on the default methods from the model",
+        "Parent": "Fit Supervised Model",
+        "Ports": ["Model", "X Train Array", "Y Train Array"],
+        "Terminals": ["Model"]
+      },
+      {
+        "ID": "Evaluate Supervised Model - Default",
+        "Name": "Evaluate Supervised Model - Default",
+        "Description": "Evaluates the model based on the test data using the default evaluation methods",
+        "Parent": "Evaluate Supervised Model",
+        "Ports": ["Model", "X Test Array", "Y Test Array"],
+        "Terminals": ["Evaluation Metrics"]
+      },
+      {
+        "ID": "No Post-processing",
+        "Name": "No Post-processing",
+        "Description": "Simple pass through of the metrics",
+        "Parent": "Post-processing",
+        "Ports": ["Evaluation Metrics"],
+        "Terminals": ["Evaluation Metrics"]
+      },
+      {
+        "ID": "Load ImageNet Dataset",
+        "Name": "Load ImageNet Dataset",
+        "Description": "Loads the ImageNet dataset",
+        "Parent": "Load Supervised Dataset",
+        "Ports": [],
+        "Terminals": ["X", "Y"]
+      },
+      {
+        "Description": "Composite processor for loading the ImageNet dataset",
+        "ID": "Load ImageNet",
+        "Name": "Load ImageNet",
+        "Parent": "Load Supervised Features",
+        "Ports": [],
+        "Subsystem": {
+          "Port Mappings": [],
+          "System ID": "Load ImageNet System",
+          "Terminal Mappings": [
+            {
+              "Index": 0,
+              "Processor": "Image Normalization Preprocessing - Training"
+            },
+            {
+              "Index": 1,
+              "Processor": "Image Normalization Preprocessing - Training"
+            },
+            {
+              "Index": 0,
+              "Processor": "Image Normalization Preprocessing - Testing"
+            },
+            {
+              "Index": 1,
+              "Processor": "Image Normalization Preprocessing - Testing"
+            }
+          ]
+        },
+        "Terminals": [
+          "X Train Array",
+          "Y Train Array",
+          "X Test Array",
+          "Y Test Array"
+        ]
+      },
+      {
+        "Description": "End-to-end pipeline for running an ImageNet ML experiment",
+        "ID": "ImageNet Experiment",
+        "Name": "ImageNet Experiment",
+        "Parent": "Experiment",
+        "Ports": ["Model"],
+        "Subsystem": {
+          "Port Mappings": [
+            {
+              "Index": 0,
+              "Processor": "Default Supervised Learning"
+            }
+          ],
+          "System ID": "ImageNet Experiment System",
+          "Terminal Mappings": [
+            {
+              "Index": 0,
+              "Processor": "Default Supervised Learning"
+            }
+          ]
+        },
+        "Terminals": ["Evaluation Metrics"]
+      }
+    ],
+    "Wires": [
+      {
+        "ID": "W1",
+        "Parent": "X",
+        "Source": { "Processor": "Load MNIST Dataset", "Index": 0 },
+        "Target": { "Processor": "Test-Train Split", "Index": 0 }
+      },
+      {
+        "ID": "W2",
+        "Parent": "Y",
+        "Source": { "Processor": "Load MNIST Dataset", "Index": 1 },
+        "Target": { "Processor": "Test-Train Split", "Index": 1 }
+      },
+      {
+        "ID": "W3",
+        "Parent": "X Train Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 0 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Training",
+          "Index": 0
+        }
+      },
+      {
+        "ID": "W4",
+        "Parent": "Y Train Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 1 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Training",
+          "Index": 1
+        }
+      },
+      {
+        "ID": "W5",
+        "Parent": "X Train Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 0 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Testing",
+          "Index": 0
+        }
+      },
+      {
+        "ID": "W6",
+        "Parent": "Y Train Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 1 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Testing",
+          "Index": 1
+        }
+      },
+      {
+        "ID": "W7",
+        "Parent": "X Test Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 2 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Testing",
+          "Index": 2
+        }
+      },
+      {
+        "ID": "W8",
+        "Parent": "Y Test Array",
+        "Source": { "Processor": "Test-Train Split", "Index": 3 },
+        "Target": {
+          "Processor": "Image Normalization Preprocessing - Testing",
+          "Index": 3
+        }
+      },
+      {
+        "ID": "W9",
+        "Parent": "Model",
+        "Source": { "Processor": "Fit Supervised Model - Default", "Index": 0 },
+        "Target": {
+          "Processor": "Evaluate Supervised Model - Default",
+          "Index": 0
+        }
+      },
+      {
+        "ID": "W10",
+        "Parent": "Evaluation Metrics",
+        "Source": {
+          "Processor": "Evaluate Supervised Model - Default",
+          "Index": 0
+        },
+        "Target": { "Processor": "No Post-processing", "Index": 0 }
+      },
+      {
+        "ID": "W11",
+        "Parent": "X Train Array",
+        "Source": { "Processor": "Load MNIST", "Index": 0 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 1 }
+      },
+      {
+        "ID": "W12",
+        "Parent": "Y Train Array",
+        "Source": { "Processor": "Load MNIST", "Index": 1 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 2 }
+      },
+      {
+        "ID": "W13",
+        "Parent": "X Test Array",
+        "Source": { "Processor": "Load MNIST", "Index": 2 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 3 }
+      },
+      {
+        "ID": "W14",
+        "Parent": "Y Test Array",
+        "Source": { "Processor": "Load MNIST", "Index": 3 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 4 }
+      },
+      {
+        "ID": "W15",
+        "Parent": "X",
+        "Source": { "Processor": "Load ImageNet Dataset", "Index": 0 },
+        "Target": { "Processor": "Test-Train Split", "Index": 0 }
+      },
+      {
+        "ID": "W16",
+        "Parent": "Y",
+        "Source": { "Processor": "Load ImageNet Dataset", "Index": 1 },
+        "Target": { "Processor": "Test-Train Split", "Index": 1 }
+      },
+      {
+        "ID": "W17",
+        "Parent": "X Train Array",
+        "Source": { "Processor": "Load ImageNet", "Index": 0 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 1 }
+      },
+      {
+        "ID": "W18",
+        "Parent": "Y Train Array",
+        "Source": { "Processor": "Load ImageNet", "Index": 1 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 2 }
+      },
+      {
+        "ID": "W19",
+        "Parent": "X Test Array",
+        "Source": { "Processor": "Load ImageNet", "Index": 2 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 3 }
+      },
+      {
+        "ID": "W20",
+        "Parent": "Y Test Array",
+        "Source": { "Processor": "Load ImageNet", "Index": 3 },
+        "Target": { "Processor": "Default Supervised Learning", "Index": 4 }
+      }
+    ],
+    "Systems": [
+      {
+        "ID": "Load MNIST System",
+        "Name": "Load MNIST System",
+        "Description": "The system representing loading the MNIST dataset, preparing the cross validation split, and pre-processing the data",
+        "Processors": [
+          "Load MNIST Dataset",
+          "Test-Train Split",
+          "Image Normalization Preprocessing - Training",
+          "Image Normalization Preprocessing - Testing"
+        ],
+        "Wires": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"]
+      },
+      {
+        "ID": "Default Supervised Learning System",
+        "Name": "Default Supervised Learning System",
+        "Description": "Conducts supervised learning using the defaults of the model",
+        "Processors": [
+          "Fit Supervised Model - Default",
+          "Evaluate Supervised Model - Default",
+          "No Post-processing"
+        ],
+        "Wires": ["W9", "W10"]
+      },
+      {
+        "ID": "Load ImageNet System",
+        "Name": "Load ImageNet System",
+        "Description": "The system representing loading the ImageNet dataset, preparing the cross validation split, and pre-processing the data",
+        "Processors": [
+          "Load ImageNet Dataset",
+          "Test-Train Split",
+          "Image Normalization Preprocessing - Training",
+          "Image Normalization Preprocessing - Testing"
+        ],
+        "Wires": ["W15", "W16", "W3", "W4", "W5", "W6", "W7", "W8"]
+      },
+      {
+        "ID": "ImageNet Experiment System",
+        "Name": "ImageNet Experiment System",
+        "Description": "The system representing the entire machine learning experiment for the ImageNet dataset",
+        "Processors": ["Load ImageNet", "Default Supervised Learning"],
+        "Wires": ["W17", "W18", "W19", "W20"]
+      }
+    ]
+  }
+}
