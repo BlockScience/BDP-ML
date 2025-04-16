@@ -1,0 +1,206 @@
+{
+    "Toolbox": {
+        "Spaces": [
+            {
+                "ID": "Model",
+                "Name": "Model",
+                "Description": "A machine learning model"
+            },
+            {
+                "ID": "Evaluation Metrics",
+                "Name": "Evaluation Metrics",
+                "Description": "Metrics for evaluating the model"
+            },
+            {
+                "ID": "X Train",
+                "Name": "X Train",
+                "Description": "X training data"
+            },
+            {
+                "ID": "Y Train",
+                "Name": "Y Train",
+                "Description": "Y training data"
+            },
+            {
+                "ID": "X Test",
+                "Name": "X Test",
+                "Description": "X testing data"
+            },
+            {
+                "ID": "Y Test",
+                "Name": "Y Test",
+                "Description": "Y testing data"
+            }
+        ],
+        "Blocks": [
+            {
+                "ID": "Experiment",
+                "Name": "Experiment",
+                "Description": "A machine learning experiment",
+                "Codomain": [
+                    "Evaluation Metrics"
+                ],
+                "Domain": [
+                    "Model"
+                ]
+            },
+            {
+                "ID": "Load Supervised Features",
+                "Name": "Load Supervised Features",
+                "Description": "Block for a composite processor of loading supervised features",
+                "Codomain": [
+                    "X Train",
+                    "Y Train",
+                    "X Test",
+                    "Y Test"
+                ],
+                "Domain": []
+            },
+            {
+                "ID": "Supervised Learning",
+                "Name": "Supervised Learning",
+                "Description": "Block for a composite processor of a supervised learning system with cross validation split",
+                "Codomain": [
+                    "Evaluation Metrics"
+                ],
+                "Domain": [
+                    "Model",
+                    "X Train",
+                    "Y Train",
+                    "X Test",
+                    "Y Test"
+                ]
+            }
+        ]
+    },
+    "Workbench": {
+        "Processors": [
+            {
+                "ID": "MNIST Experiment",
+                "Parent": "Experiment",
+                "Name": "MNIST Experiment",
+                "Description": "Runs experiments on the MNIST dataset",
+                "Subsystem": {
+                    "System ID": "MNIST Experiment System",
+                    "Port Mappings": [
+                        {
+                            "Index": 0,
+                            "Processor": "Default Supervised Learning"
+                        }
+                    ],
+                    "Terminal Mappings": [
+                        {
+                            "Index": 0,
+                            "Processor": "Default Supervised Learning"
+                        }
+                    ]
+                },
+                "Ports": [
+                    "Model"
+                ],
+                "Terminals": [
+                    "Evaluation Metrics"
+                ]
+            },
+            {
+                "ID": "Load MNIST",
+                "Parent": "Load Supervised Features",
+                "Name": "Load MNIST",
+                "Description": "A processor for loading and pre-processing the MNIST dataset",
+                "Subsystem": null,
+                "Ports": [],
+                "Terminals": [
+                    "X Train",
+                    "Y Train",
+                    "X Test",
+                    "Y Test"
+                ]
+            },
+            {
+                "ID": "Default Supervised Learning",
+                "Parent": "Supervised Learning",
+                "Name": "Default Supervised Learning",
+                "Description": "A processor for conducting default supervised learning based with defaults of the model",
+                "Subsystem": null,
+                "Ports": [
+                    "Model",
+                    "X Train",
+                    "Y Train",
+                    "X Test",
+                    "Y Test"
+                ],
+                "Terminals": [
+                    "Evaluation Metrics"
+                ]
+            }
+        ],
+        "Wires": [
+            {
+                "Parent": "X Train",
+                "Source": {
+                    "Index": 0,
+                    "Processor": "Load MNIST"
+                },
+                "Target": {
+                    "Index": 1,
+                    "Processor": "Default Supervised Learning"
+                },
+                "ID": "W1"
+            },
+            {
+                "Parent": "Y Train",
+                "Source": {
+                    "Index": 1,
+                    "Processor": "Load MNIST"
+                },
+                "Target": {
+                    "Index": 2,
+                    "Processor": "Default Supervised Learning"
+                },
+                "ID": "W2"
+            },
+            {
+                "Parent": "X Test",
+                "Source": {
+                    "Index": 2,
+                    "Processor": "Load MNIST"
+                },
+                "Target": {
+                    "Index": 3,
+                    "Processor": "Default Supervised Learning"
+                },
+                "ID": "W3"
+            },
+            {
+                "Parent": "Y Test",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "Load MNIST"
+                },
+                "Target": {
+                    "Index": 4,
+                    "Processor": "Default Supervised Learning"
+                },
+                "ID": "W4"
+            }
+        ],
+        "Systems": [
+            {
+                "ID": "MNIST Experiment System",
+                "Name": "MNIST Experiment System",
+                "Processors": [
+                    "Load MNIST",
+                    "Default Supervised Learning"
+                ],
+                "Wires": [
+                    "W1",
+                    "W2",
+                    "W3",
+                    "W4"
+                ],
+                "Description": "The system representing the entire machine learning experiment for the MNIST dataset",
+                "Subsystem": null
+            }
+        ]
+    }
+}
