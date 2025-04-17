@@ -8,14 +8,6 @@
   "Workbench": {
     "Processors": [
       {
-        "ID": "Load ImageNet Dataset",
-        "Name": "Load ImageNet Dataset",
-        "Description": "Loads the ImageNet dataset",
-        "Parent": "Load Supervised Dataset",
-        "Ports": [],
-        "Terminals": ["X", "Y"]
-      },
-      {
         "Description": "Composite processor for loading the ImageNet dataset",
         "ID": "Load ImageNet",
         "Name": "Load ImageNet",
