@@ -1,16 +1,7 @@
 {
   "Toolbox": {
     "Spaces": [
-      {
-        "ID": "X",
-        "Name": "X",
-        "Description": "X Data"
-      },
-      {
-        "ID": "Y",
-        "Name": "Y",
-        "Description": "Y Data"
-      },
+      
       {
         "ID": "m",
         "Name": "m",
@@ -38,44 +29,7 @@
       }
     ],
     "Blocks": [
-      {
-        "ID": "Load Supervised Dataset",
-        "Name": "Load Supervised Dataset",
-        "Description": "Loads the data for a supervised learning problem",
-        "Domain": [],
-        "Codomain": ["X", "Y"]
-      },
-      {
-        "ID": "Cross Validation Split",
-        "Name": "Cross Validation Split",
-        "Description": "Splits data into training and testing sets",
-        "Domain": ["X", "Y"],
-        "Codomain": [
-          "X Train Array",
-          "Y Train Array",
-          "X Test Array",
-          "Y Test Array"
-        ]
-      },
-      {
-        "ID": "Training Data Preprocessing",
-        "Name": "Training Data Preprocessing",
-        "Description": "Preprocesses training data for model training",
-        "Domain": ["X Train Array", "Y Train Array"],
-        "Codomain": ["X Train Array", "Y Train Array"]
-      },
-      {
-        "ID": "Testing Data Preprocessing",
-        "Name": "Testing Data Preprocessing",
-        "Description": "Preprocesses testing data for model evaluation, optionally can use the training data in addition",
-        "Domain": [
-          "X Train Array",
-          "Y Train Array",
-          "X Test Array",
-          "Y Test Array"
-        ],
-        "Codomain": ["X Test Array", "Y Test Array"]
-      },
+      
 
       {
         "ID": "Fit Supervised Model",
@@ -102,48 +56,7 @@
   },
   "Workbench": {
     "Processors": [
-      {
-        "ID": "Load MNIST Dataset",
-        "Name": "Load MNIST Dataset",
-        "Description": "Loads the MNSIT dataset",
-        "Parent": "Load Supervised Dataset",
-        "Ports": [],
-        "Terminals": ["X", "Y"]
-      },
-      {
-        "ID": "Test-Train Split",
-        "Name": "Test-Train Split",
-        "Description": "Splits data into one training and one test set",
-        "Parent": "Cross Validation Split",
-        "Ports": ["X", "Y"],
-        "Terminals": [
-          "X Train Array",
-          "Y Train Array",
-          "X Test Array",
-          "Y Test Array"
-        ]
-      },
-      {
-        "ID": "Image Normalization Preprocessing - Training",
-        "Name": "Image Normalization Preprocessing - Training",
-        "Description": "Preprocessesing for image based training data",
-        "Parent": "Training Data Preprocessing",
-        "Ports": ["X Train Array", "Y Train Array"],
-        "Terminals": ["X Train Array", "Y Train Array"]
-      },
-      {
-        "ID": "Image Normalization Preprocessing - Testing",
-        "Name": "Image Normalization Preprocessing - Testing",
-        "Description": "Preprocesses testing data for model evaluation",
-        "Parent": "Testing Data Preprocessing",
-        "Ports": [
-          "X Train Array",
-          "Y Train Array",
-          "X Test Array",
-          "Y Test Array"
-        ],
-        "Terminals": ["X Test Array", "Y Test Array"]
-      },
+      
       {
         "ID": "Fit Supervised Model - Default",
         "Name": "Fit Supervised Model - Default",
@@ -382,18 +295,7 @@
       }
     ],
     "Systems": [
-      {
-        "ID": "Load MNIST System",
-        "Name": "Load MNIST System",
-        "Description": "The system representing loading the MNIST dataset, preparing the cross validation split, and pre-processing the data",
-        "Processors": [
-          "Load MNIST Dataset",
-          "Test-Train Split",
-          "Image Normalization Preprocessing - Training",
-          "Image Normalization Preprocessing - Testing"
-        ],
-        "Wires": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"]
-      },
+
       {
         "ID": "Default Supervised Learning System",
         "Name": "Default Supervised Learning System",
