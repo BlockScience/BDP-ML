@@ -31,56 +31,12 @@
     "Blocks": [
       
 
-      {
-        "ID": "Fit Supervised Model",
-        "Name": "Fit Supervised Model",
-        "Description": "Fits a model to the training data",
-        "Domain": ["Model", "X Train Array", "Y Train Array"],
-        "Codomain": ["Model"]
-      },
-      {
-        "ID": "Evaluate Supervised Model",
-        "Name": "Evaluate Supervised Model",
-        "Description": "Evaluates the model based on the test data",
-        "Domain": ["Model", "X Test Array", "Y Test Array"],
-        "Codomain": ["Evaluation Metrics"]
-      },
-      {
-        "ID": "Post-processing",
-        "Name": "Post-processing",
-        "Description": "The block for taking care of any post-processing of metrics",
-        "Domain": ["Evaluation Metrics"],
-        "Codomain": ["Evaluation Metrics"]
-      }
     ]
   },
   "Workbench": {
     "Processors": [
       
-      {
-        "ID": "Fit Supervised Model - Default",
-        "Name": "Fit Supervised Model - Default",
-        "Description": "Fits a model to the training data based on the default methods from the model",
-        "Parent": "Fit Supervised Model",
-        "Ports": ["Model", "X Train Array", "Y Train Array"],
-        "Terminals": ["Model"]
-      },
-      {
-        "ID": "Evaluate Supervised Model - Default",
-        "Name": "Evaluate Supervised Model - Default",
-        "Description": "Evaluates the model based on the test data using the default evaluation methods",
-        "Parent": "Evaluate Supervised Model",
-        "Ports": ["Model", "X Test Array", "Y Test Array"],
-        "Terminals": ["Evaluation Metrics"]
-      },
-      {
-        "ID": "No Post-processing",
-        "Name": "No Post-processing",
-        "Description": "Simple pass through of the metrics",
-        "Parent": "Post-processing",
-        "Ports": ["Evaluation Metrics"],
-        "Terminals": ["Evaluation Metrics"]
-      },
+
       {
         "ID": "Load ImageNet Dataset",
         "Name": "Load ImageNet Dataset",
@@ -296,17 +252,7 @@
     ],
     "Systems": [
 
-      {
-        "ID": "Default Supervised Learning System",
-        "Name": "Default Supervised Learning System",
-        "Description": "Conducts supervised learning using the defaults of the model",
-        "Processors": [
-          "Fit Supervised Model - Default",
-          "Evaluate Supervised Model - Default",
-          "No Post-processing"
-        ],
-        "Wires": ["W9", "W10"]
-      },
+
       {
         "ID": "Load ImageNet System",
         "Name": "Load ImageNet System",
