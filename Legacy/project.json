@@ -1,42 +1,12 @@
 {
   "Toolbox": {
     "Spaces": [
-      
-      {
-        "ID": "m",
-        "Name": "m",
-        "Description": "First moment estimate"
-      },
-      {
-        "ID": "v",
-        "Name": "v",
-        "Description": "Second moment estimate"
-      },
-      {
-        "ID": "t",
-        "Name": "t",
-        "Description": "Timestep"
-      },
-      {
-        "ID": "theta",
-        "Name": "theta",
-        "Description": "Model parameters"
-      },
-      {
-        "ID": "g",
-        "Name": "g",
-        "Description": "Gradients"
-      }
     ],
     "Blocks": [
-      
-
     ]
   },
   "Workbench": {
     "Processors": [
-      
-
       {
         "ID": "Load ImageNet Dataset",
         "Name": "Load ImageNet Dataset",
@@ -251,8 +221,6 @@
       }
     ],
     "Systems": [
-
-
       {
         "ID": "Load ImageNet System",
         "Name": "Load ImageNet System",
