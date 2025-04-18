@@ -215,18 +215,6 @@
     ],
     "Systems": [
       {
-        "ID": "Load ImageNet System",
-        "Name": "Load ImageNet System",
-        "Description": "The system representing loading the ImageNet dataset, preparing the cross validation split, and pre-processing the data",
-        "Processors": [
-          "Load ImageNet Dataset",
-          "Test-Train Split",
-          "Image Normalization Preprocessing - Training",
-          "Image Normalization Preprocessing - Testing"
-        ],
-        "Wires": ["W15", "W16", "W3", "W4", "W5", "W6", "W7", "W8"]
-      },
-      {
         "ID": "ImageNet Experiment System",
         "Name": "ImageNet Experiment System",
         "Description": "The system representing the entire machine learning experiment for the ImageNet dataset",
