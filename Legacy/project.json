@@ -7,6 +7,7 @@
   },
   "Workbench": {
     "Processors": [
+      
       {
         "Description": "Composite processor for loading the ImageNet dataset",
         "ID": "Load ImageNet",
