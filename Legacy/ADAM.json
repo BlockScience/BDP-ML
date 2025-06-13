@@ -1,14 +1,6 @@
 {
     "Toolbox": {
-        "Spaces": [
 
-
-            {
-              "ID": "g",
-              "Name": "g",
-              "Description": "Gradients"
-          }
-        ],
         "Blocks": [
         {
             "ID": "Update Timestep",
