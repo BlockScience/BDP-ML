@@ -319,13 +319,7 @@
 }
         ],
         "Systems": [
-          {
-            "ID": "ADAM System",
-            "Name": "ADAM System",
-            "Description": "The system representing the ADAM algorithm",
-            "Processors": ["ADAM Initialization", "ADAM Update Loop"],
-            "Wires": ["W1", "W2", "W3", "W4"]
-        },
+
         {
             "ID": "ADAM Update Step System",
             "Name": "ADAM Update Step System",
