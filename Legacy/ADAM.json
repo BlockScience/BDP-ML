@@ -10,15 +10,6 @@
           }
         ],
         "Blocks": [
-
-
-          {
-            "ID": "Convergence Criteria",
-            "Name": "Convergence Criteria",
-            "Description": "Evaluates whether the optimization process has converged based on moments, timestep, and parameters",
-            "Domain": ["m", "v", "t", "theta"],
-            "Codomain": ["m", "v", "t", "theta"]
-        },
         {
             "ID": "Update Timestep",
             "Name": "Update Timestep",
@@ -67,13 +58,6 @@
             "Description": "Updates model parameters based on bias-corrected moment estimates",
             "Domain": ["m", "v", "theta"],
             "Codomain": ["theta"]
-        },
-        {
-          "Codomain": ["theta",  "m", "v", "t"],
-          "Description": "One step in the optimization process",
-          "Domain": ["theta", "m", "v", "t", "theta"],
-          "ID": "Optimization Step",
-          "Name": "Optimization Step"
         }
         ]
     },
@@ -135,92 +119,11 @@
             "Parent": "Update Theta",
             "Ports": ["m", "v", "theta"],
             "Terminals": ["theta"]
-        },
-        {
-          "ID": "Theta Convergence Criteria",
-          "Name": "Theta Convergence Criteria",
-          "Description": "Convergence criteria based only on theta",
-          "Parent": "Convergence Criteria",
-          "Ports": ["m", "v", "t", "theta"],
-          "Terminals": ["m", "v", "t", "theta"]
-      },
-      {
-        "Description": "A lazy loaded composite processor block for ADAM Update Step System",
-        "ID": "ADAM Update Step",
-        "Name": "ADAM Update Step",
-        "Parent": "Optimization Step",
-        "Ports": ["theta", "m", "v", "t", "theta"],
-        "Subsystem": {
-          "Port Mappings": [
-            {
-              "Index": 0,
-              "Processor": "Get Function Gradients"
-            },
-            {
-              "Index": 0,
-              "Processor": "Exponential Smoothing First Moment"
-            },
-            {
-              "Index": 0,
-              "Processor": "Exponential Smoothing Second Moment"
-            },
-            {
-              "Index": 0,
-              "Processor": "Increment Timestep"
-            },
-            {
-              "Index": 2,
-              "Processor": "ADAM Theta Update"
-            }
-          ],
-          "System ID": "ADAM Update Step System",
-          "Terminal Mappings": [
-            {
-              "Index": 0,
-              "Processor": "ADAM Theta Update"
-            },
-            {
-              "Index": 0,
-              "Processor": "Exponential Smoothing First Moment"
-            },
-            {
-              "Index": 0,
-              "Processor": "Exponential Smoothing Second Moment"
-            },
-            {
-              "Index": 0,
-              "Processor": "Increment Timestep"
-            }
-          ]
-        },
-        "Terminals": ["theta", "m", "v", "t"]
-      }
+        }
+
+      
         ],
         "Wires": [
-          {
-            "ID": "W1",
-            "Parent": "theta",
-            "Source": {"Processor": "ADAM Initialization", "Index": 0},
-            "Target": {"Processor": "ADAM Update Loop", "Index": 0}
-        },
-        {
-          "ID": "W2",
-          "Parent": "m",
-          "Source": {"Processor": "ADAM Initialization", "Index": 1},
-          "Target": {"Processor": "ADAM Update Loop", "Index": 1}
-      },
-      {
-        "ID": "W3",
-        "Parent": "v",
-        "Source": {"Processor": "ADAM Initialization", "Index": 2},
-        "Target": {"Processor": "ADAM Update Loop", "Index": 2}
-    },
-    {
-      "ID": "W4",
-      "Parent": "t",
-      "Source": {"Processor": "ADAM Initialization", "Index": 3},
-      "Target": {"Processor": "ADAM Update Loop", "Index": 3}
-  },
   {
     "ID": "W5",
     "Parent": "m",
