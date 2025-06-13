@@ -1,21 +1,7 @@
 {
     "Toolbox": {
         "Spaces": [
-            {
-                "ID": "m",
-                "Name": "m",
-                "Description": "First moment vector"
-            },
-            {
-                "ID": "v",
-                "Name": "v",
-                "Description": "Second moment vector"
-            },
-            {
-                "ID": "t",
-                "Name": "t",
-                "Description": "The current timestep"
-            },
+
 
             {
               "ID": "g",
@@ -24,20 +10,7 @@
           }
         ],
         "Blocks": [
-            {
-                "ID": "ADAM Initialization Block",
-                "Name": "ADAM Initialization Block",
-                "Description": "Initializes the ADAM state variables",
-                "Domain": ["theta"],
-                "Codomain": ["theta", "m", "v", "t"]
-            },
-            {
-              "ID": "ADAM Update Loop Block",
-              "Name": "ADAM Update Loop Block",
-              "Description": "Loops through the ADAM updates",
-              "Domain": ["theta", "m", "v", "t"],
-              "Codomain": ["theta"]
-          },
+
 
           {
             "ID": "Convergence Criteria",
@@ -106,22 +79,7 @@
     },
     "Workbench": {
         "Processors": [
-            {
-                "ID": "ADAM Initialization",
-                "Name": "ADAM Initialization",
-                "Description": "Initialiazes the ADAM state variables",
-                "Parent": "ADAM Initialization Block",
-                "Ports": ["theta"],
-                "Terminals": ["theta", "m", "v", "t"]
-            },
-            {
-                "ID": "ADAM Update Loop",
-                "Name": "ADAM Update Loop",
-                "Description": "Loops through the ADAM updates",
-                "Parent": "ADAM Update Loop Block",
-                "Ports": ["theta", "m", "v", "t"],
-                "Terminals": ["theta"]
-            },
+
             {
               "ID": "Increment Timestep",
               "Name": "Increment Timestep",
