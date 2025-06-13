@@ -237,13 +237,6 @@
                 "ADAM Theta Update"
             ],
             "Wires": ["W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12"]
-        },
-        {
-            "ID": "ADAM Optimization Loop System",
-            "Name": "ADAM Optimization Loop System",
-            "Description": "The system representing the ADAM optimization loop with convergence checking",
-            "Processors": ["ADAM Update Step", "Theta Convergence Criteria"],
-            "Wires": ["W13", "W14", "W15", "W16", "W17", "W18", "W19", "W20"]
         }
         ]
     }
