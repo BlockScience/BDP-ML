@@ -1,58 +1,5 @@
 {
-    "Toolbox": {
 
-        "Blocks": [
-        {
-            "ID": "Update Timestep",
-            "Name": "Update Timestep",
-            "Description": "Updates the current timestep value",
-            "Domain": ["t"],
-            "Codomain": ["t"]
-        },
-        {
-            "ID": "Get Gradients",
-            "Name": "Get Gradients",
-            "Description": "Computes the gradients",
-            "Domain": ["theta"],
-            "Codomain": ["g"]
-        },
-        {
-            "ID": "Update Biased First Moment",
-            "Name": "Update Biased First Moment",
-            "Description": "Updates the biased first moment estimate",
-            "Domain": ["m", "g"],
-            "Codomain": ["m"]
-        },
-        {
-            "ID": "Update Biased Second Moment",
-            "Name": "Update Biased Second Moment",
-            "Description": "Updates the biased second moment estimate",
-            "Domain": ["v", "g"],
-            "Codomain": ["v"]
-        },
-        {
-            "ID": "Compute Bias-Corrected First Moment",
-            "Name": "Compute Bias-Corrected First Moment",
-            "Description": "Computes the bias-corrected first moment estimate",
-            "Domain": ["m", "t"],
-            "Codomain": ["m"]
-        },
-        {
-            "ID": "Compute Bias-Corrected Second Moment",
-            "Name": "Compute Bias-Corrected Second Moment",
-            "Description": "Computes the bias-corrected second moment estimate",
-            "Domain": ["v", "t"],
-            "Codomain": ["v"]
-        },
-        {
-            "ID": "Update Theta",
-            "Name": "Update Theta",
-            "Description": "Updates model parameters based on bias-corrected moment estimates",
-            "Domain": ["m", "v", "theta"],
-            "Codomain": ["theta"]
-        }
-        ]
-    },
     "Workbench": {
         "Processors": [
 
