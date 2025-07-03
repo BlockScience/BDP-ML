@@ -1,0 +1,872 @@
+{
+    "Toolbox": {
+        "Spaces": [
+            {
+                "ID": "theta",
+                "Name": "theta",
+                "Description": "The model parameters"
+            },
+            {
+                "ID": "m",
+                "Name": "m",
+                "Description": "First moment vector"
+            },
+            {
+                "ID": "v",
+                "Name": "v",
+                "Description": "Second moment vector"
+            },
+            {
+                "ID": "t",
+                "Name": "t",
+                "Description": "The current timestep"
+            },
+            {
+                "ID": "g",
+                "Name": "g",
+                "Description": "Gradients"
+            }
+        ],
+        "Blocks": [
+            {
+                "ID": "Parameter Optimization Block",
+                "Name": "Parameter Optimization Block",
+                "Description": "The block for parameter optimization",
+                "Codomain": [
+                    "theta"
+                ],
+                "Domain": [
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Parameter Initialization",
+                "Name": "Parameter Initialization",
+                "Description": "The block for parameter initialization",
+                "Codomain": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ],
+                "Domain": [
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Optimization Update Loop",
+                "Name": "Optimization Update Loop",
+                "Description": "The block for the update loop of optimization",
+                "Codomain": [
+                    "theta"
+                ],
+                "Domain": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ]
+            },
+            {
+                "ID": "Optimization Loop Switch",
+                "Name": "Optimization Loop Switch",
+                "Description": "The switch for the optimization loop",
+                "Codomain": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ],
+                "Domain": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta",
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Convergence Criteria",
+                "Name": "Convergence Criteria",
+                "Description": "Evaluates whether the optimization process has converged based on moments, timestep, and parameters",
+                "Codomain": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ],
+                "Domain": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Optimization Step",
+                "Name": "Optimization Step",
+                "Description": "One step in the optimization process",
+                "Codomain": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ],
+                "Domain": [
+                    "theta",
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ]
+            },
+            {
+                "ID": "Update Timestep",
+                "Name": "Update Timestep",
+                "Description": "Updates the current timestep value",
+                "Codomain": [
+                    "t"
+                ],
+                "Domain": [
+                    "t"
+                ]
+            },
+            {
+                "ID": "Get Gradients",
+                "Name": "Get Gradients",
+                "Description": "Computes the gradients",
+                "Codomain": [
+                    "g"
+                ],
+                "Domain": [
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Update Biased First Moment",
+                "Name": "Update Biased First Moment",
+                "Description": "Updates the biased first moment estimate",
+                "Codomain": [
+                    "m"
+                ],
+                "Domain": [
+                    "m",
+                    "g"
+                ]
+            },
+            {
+                "ID": "Update Biased Second Moment",
+                "Name": "Update Biased Second Moment",
+                "Description": "Updates the biased second moment estimate",
+                "Codomain": [
+                    "v"
+                ],
+                "Domain": [
+                    "v",
+                    "g"
+                ]
+            },
+            {
+                "ID": "Compute Bias-Corrected First Moment",
+                "Name": "Compute Bias-Corrected First Moment",
+                "Description": "Computes the bias-corrected first moment estimate",
+                "Codomain": [
+                    "m"
+                ],
+                "Domain": [
+                    "m",
+                    "t"
+                ]
+            },
+            {
+                "ID": "Compute Bias-Corrected Second Moment",
+                "Name": "Compute Bias-Corrected Second Moment",
+                "Description": "Computes the bias-corrected second moment estimate",
+                "Codomain": [
+                    "v"
+                ],
+                "Domain": [
+                    "v",
+                    "t"
+                ]
+            },
+            {
+                "ID": "Update Theta",
+                "Name": "Update Theta",
+                "Description": "Updates model parameters based on bias-corrected moment estimates",
+                "Codomain": [
+                    "theta"
+                ],
+                "Domain": [
+                    "m",
+                    "v",
+                    "theta"
+                ]
+            }
+        ]
+    },
+    "Workbench": {
+        "Processors": [
+            {
+                "ID": "ADAM",
+                "Parent": "Parameter Optimization Block",
+                "Name": "ADAM",
+                "Description": "The ADAM optimization algorithm",
+                "Subsystem": {
+                    "System ID": "ADAM System",
+                    "Port Mappings": [
+                        {
+                            "Processor": "ADAM Initialization",
+                            "Index": 0
+                        }
+                    ],
+                    "Terminal Mappings": [
+                        {
+                            "Processor": "ADAM Update Loop",
+                            "Index": 0
+                        }
+                    ]
+                },
+                "Ports": [
+                    "theta"
+                ],
+                "Terminals": [
+                    "theta"
+                ]
+            },
+            {
+                "ID": "ADAM Initialization",
+                "Parent": "Parameter Initialization",
+                "Name": "ADAM Initialization",
+                "Description": "Initialiazes the ADAM state variables",
+                "Subsystem": null,
+                "Ports": [
+                    "theta"
+                ],
+                "Terminals": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ]
+            },
+            {
+                "ID": "ADAM Update Loop",
+                "Parent": "Optimization Update Loop",
+                "Name": "ADAM Update Loop",
+                "Description": "Loops through the ADAM updates",
+                "Subsystem": {
+                    "System ID": "ADAM Optimization Loop System",
+                    "Port Mappings": [
+                        {
+                            "Index": 3,
+                            "Processor": "ADAM Switch"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "ADAM Switch"
+                        },
+                        {
+                            "Index": 1,
+                            "Processor": "ADAM Switch"
+                        },
+                        {
+                            "Index": 2,
+                            "Processor": "ADAM Switch"
+                        }
+                    ],
+                    "Terminal Mappings": [
+                        {
+                            "Index": 3,
+                            "Processor": "Theta Convergence Criteria"
+                        }
+                    ]
+                },
+                "Ports": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ],
+                "Terminals": [
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Theta Convergence Criteria",
+                "Parent": "Convergence Criteria",
+                "Name": "Theta Convergence Criteria",
+                "Description": "Convergence criteria based only on theta",
+                "Subsystem": null,
+                "Ports": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ],
+                "Terminals": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ]
+            },
+            {
+                "ID": "ADAM Update Step",
+                "Parent": "Optimization Step",
+                "Name": "ADAM Update Step",
+                "Description": "One update step in the ADAM algorithm",
+                "Subsystem": {
+                    "System ID": "ADAM Update Step System",
+                    "Port Mappings": [
+                        {
+                            "Index": 0,
+                            "Processor": "Get Function Gradients"
+                        },
+                        {
+                            "Index": 2,
+                            "Processor": "ADAM Theta Update"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Exponential Smoothing First Moment"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Exponential Smoothing Second Moment"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Increment Timestep"
+                        }
+                    ],
+                    "Terminal Mappings": [
+                        {
+                            "Index": 0,
+                            "Processor": "ADAM Theta Update"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Exponential Decay First Moment Bias Correction"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Exponential Decay Second Moment Bias Correction"
+                        },
+                        {
+                            "Index": 0,
+                            "Processor": "Increment Timestep"
+                        }
+                    ]
+                },
+                "Ports": [
+                    "theta",
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ],
+                "Terminals": [
+                    "theta",
+                    "m",
+                    "v",
+                    "t"
+                ]
+            },
+            {
+                "ID": "ADAM Switch",
+                "Parent": "Optimization Loop Switch",
+                "Name": "ADAM Switch",
+                "Description": "The switch for the ADAM optimization algorithm",
+                "Subsystem": null,
+                "Ports": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta",
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ],
+                "Terminals": [
+                    "m",
+                    "v",
+                    "t",
+                    "theta"
+                ]
+            },
+            {
+                "ID": "Increment Timestep",
+                "Parent": "Update Timestep",
+                "Name": "Increment Timestep",
+                "Description": "Increments t by 1",
+                "Subsystem": null,
+                "Ports": [
+                    "t"
+                ],
+                "Terminals": [
+                    "t"
+                ]
+            },
+            {
+                "ID": "Get Function Gradients",
+                "Parent": "Get Gradients",
+                "Name": "Get Function Gradients",
+                "Description": "Computes the gradients of a function which respect to theta. $g_t$ \u2190 $\u2207_\u03b8f_t(\u03b8_{t\u22121})$",
+                "Subsystem": null,
+                "Ports": [
+                    "theta"
+                ],
+                "Terminals": [
+                    "g"
+                ]
+            },
+            {
+                "ID": "Exponential Smoothing First Moment",
+                "Parent": "Update Biased First Moment",
+                "Name": "Exponential Smoothing First Moment",
+                "Description": "Updates the first moment estimate using exponential smoothing with beta1 parameter. $m_t$ \u2190 $\u03b2_1$ \u00b7 $m_{t-1}$ + (1 \u2212 $\u03b2_1$) \u00b7 $g_t$ ",
+                "Subsystem": null,
+                "Ports": [
+                    "m",
+                    "g"
+                ],
+                "Terminals": [
+                    "m"
+                ]
+            },
+            {
+                "ID": "Exponential Smoothing Second Moment",
+                "Parent": "Update Biased Second Moment",
+                "Name": "Exponential Smoothing Second Moment",
+                "Description": "Updates the second moment estimate using exponential smoothing with beta2 parameter. $v_t$ \u2190 $\u03b2_2$ \u00b7 $v_{t-1}$ + (1 \u2212 $\u03b2_2$) \u00b7 $g_t^2$",
+                "Subsystem": null,
+                "Ports": [
+                    "v",
+                    "g"
+                ],
+                "Terminals": [
+                    "v"
+                ]
+            },
+            {
+                "ID": "Exponential Decay First Moment Bias Correction",
+                "Parent": "Compute Bias-Corrected First Moment",
+                "Name": "Exponential Decay First Moment Bias Correction",
+                "Description": "Computes the bias-corrected first moment estimate using exponential decay. $\\hat{m}_t$ \u2190 $m_t$ / (1 \u2212 $\\beta_1^t$)",
+                "Subsystem": null,
+                "Ports": [
+                    "m",
+                    "t"
+                ],
+                "Terminals": [
+                    "m"
+                ]
+            },
+            {
+                "ID": "Exponential Decay Second Moment Bias Correction",
+                "Parent": "Compute Bias-Corrected Second Moment",
+                "Name": "Exponential Decay Second Moment Bias Correction",
+                "Description": "Computes the bias-corrected second moment estimate using exponential decay. $\\hat{v}_t$ \u2190 $v_t$ / (1 \u2212 $\\beta_2^t$)",
+                "Subsystem": null,
+                "Ports": [
+                    "v",
+                    "t"
+                ],
+                "Terminals": [
+                    "v"
+                ]
+            },
+            {
+                "ID": "ADAM Theta Update",
+                "Parent": "Update Theta",
+                "Name": "ADAM Theta Update",
+                "Description": "Updates model parameters using ADAM formula: $\u03b8_t$ \u2190 $\u03b8_{t-1} - \u03b1 \u00b7 \\hat{m}_t / (\\sqrt{\\hat{v}_t} + \u03f5)$",
+                "Subsystem": null,
+                "Ports": [
+                    "m",
+                    "v",
+                    "theta"
+                ],
+                "Terminals": [
+                    "theta"
+                ]
+            }
+        ],
+        "Wires": [
+            {
+                "Parent": "theta",
+                "Source": {
+                    "Index": 0,
+                    "Processor": "ADAM Initialization"
+                },
+                "Target": {
+                    "Index": 0,
+                    "Processor": "ADAM Update Loop"
+                },
+                "ID": "W1"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Index": 1,
+                    "Processor": "ADAM Initialization"
+                },
+                "Target": {
+                    "Index": 1,
+                    "Processor": "ADAM Update Loop"
+                },
+                "ID": "W2"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Index": 2,
+                    "Processor": "ADAM Initialization"
+                },
+                "Target": {
+                    "Index": 2,
+                    "Processor": "ADAM Update Loop"
+                },
+                "ID": "W3"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "ADAM Initialization"
+                },
+                "Target": {
+                    "Index": 3,
+                    "Processor": "ADAM Update Loop"
+                },
+                "ID": "W4"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Index": 0,
+                    "Processor": "ADAM Switch"
+                },
+                "Target": {
+                    "Index": 0,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "ID": "W5"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Index": 1,
+                    "Processor": "ADAM Switch"
+                },
+                "Target": {
+                    "Index": 1,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "ID": "W6"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Index": 2,
+                    "Processor": "ADAM Switch"
+                },
+                "Target": {
+                    "Index": 2,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "ID": "W7"
+            },
+            {
+                "Parent": "theta",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "ADAM Switch"
+                },
+                "Target": {
+                    "Index": 3,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "ID": "W8"
+            },
+            {
+                "Parent": "theta",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "Target": {
+                    "Index": 0,
+                    "Processor": "ADAM Update Step"
+                },
+                "ID": "W9"
+            },
+            {
+                "Parent": "theta",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "Target": {
+                    "Index": 1,
+                    "Processor": "ADAM Update Step"
+                },
+                "ID": "W10"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Index": 0,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "Target": {
+                    "Index": 2,
+                    "Processor": "ADAM Update Step"
+                },
+                "ID": "W11"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Index": 1,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "Target": {
+                    "Index": 3,
+                    "Processor": "ADAM Update Step"
+                },
+                "ID": "W12"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Index": 2,
+                    "Processor": "Theta Convergence Criteria"
+                },
+                "Target": {
+                    "Index": 4,
+                    "Processor": "ADAM Update Step"
+                },
+                "ID": "W13"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Index": 1,
+                    "Processor": "ADAM Update Step"
+                },
+                "Target": {
+                    "Index": 4,
+                    "Processor": "ADAM Switch"
+                },
+                "ID": "W14"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Index": 2,
+                    "Processor": "ADAM Update Step"
+                },
+                "Target": {
+                    "Index": 5,
+                    "Processor": "ADAM Switch"
+                },
+                "ID": "W15"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Index": 3,
+                    "Processor": "ADAM Update Step"
+                },
+                "Target": {
+                    "Index": 6,
+                    "Processor": "ADAM Switch"
+                },
+                "ID": "W16"
+            },
+            {
+                "Parent": "theta",
+                "Source": {
+                    "Index": 0,
+                    "Processor": "ADAM Update Step"
+                },
+                "Target": {
+                    "Index": 7,
+                    "Processor": "ADAM Switch"
+                },
+                "ID": "W17"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Processor": "Exponential Decay First Moment Bias Correction",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "ADAM Theta Update",
+                    "Index": 0
+                },
+                "ID": "W18"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Processor": "Exponential Decay Second Moment Bias Correction",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "ADAM Theta Update",
+                    "Index": 1
+                },
+                "ID": "W19"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Processor": "Increment Timestep",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Decay First Moment Bias Correction",
+                    "Index": 1
+                },
+                "ID": "W20"
+            },
+            {
+                "Parent": "t",
+                "Source": {
+                    "Processor": "Increment Timestep",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Decay Second Moment Bias Correction",
+                    "Index": 1
+                },
+                "ID": "W21"
+            },
+            {
+                "Parent": "m",
+                "Source": {
+                    "Processor": "Exponential Smoothing First Moment",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Decay First Moment Bias Correction",
+                    "Index": 0
+                },
+                "ID": "W22"
+            },
+            {
+                "Parent": "v",
+                "Source": {
+                    "Processor": "Exponential Smoothing Second Moment",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Decay Second Moment Bias Correction",
+                    "Index": 0
+                },
+                "ID": "W23"
+            },
+            {
+                "Parent": "g",
+                "Source": {
+                    "Processor": "Get Function Gradients",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Smoothing First Moment",
+                    "Index": 1
+                },
+                "ID": "W24"
+            },
+            {
+                "Parent": "g",
+                "Source": {
+                    "Processor": "Get Function Gradients",
+                    "Index": 0
+                },
+                "Target": {
+                    "Processor": "Exponential Smoothing Second Moment",
+                    "Index": 1
+                },
+                "ID": "W25"
+            }
+        ],
+        "Systems": [
+            {
+                "ID": "ADAM System",
+                "Name": "ADAM System",
+                "Processors": [
+                    "ADAM Initialization",
+                    "ADAM Update Loop"
+                ],
+                "Wires": [
+                    "W1",
+                    "W2",
+                    "W3",
+                    "W4"
+                ],
+                "Description": "The system representing the ADAM algorithm",
+                "Subsystem": null
+            },
+            {
+                "ID": "ADAM Optimization Loop System",
+                "Name": "ADAM Optimization Loop System",
+                "Processors": [
+                    "ADAM Switch",
+                    "ADAM Update Step",
+                    "Theta Convergence Criteria"
+                ],
+                "Wires": [
+                    "W5",
+                    "W6",
+                    "W7",
+                    "W8",
+                    "W9",
+                    "W10",
+                    "W11",
+                    "W12",
+                    "W13",
+                    "W14",
+                    "W15",
+                    "W16",
+                    "W17"
+                ],
+                "Description": "The system representing the ADAM optimization loop with convergence checking",
+                "Subsystem": null
+            },
+            {
+                "ID": "ADAM Update Step System",
+                "Name": "ADAM Update Step System",
+                "Processors": [
+                    "Get Function Gradients",
+                    "Exponential Smoothing First Moment",
+                    "Exponential Smoothing Second Moment",
+                    "Increment Timestep",
+                    "Exponential Decay First Moment Bias Correction",
+                    "Exponential Decay Second Moment Bias Correction",
+                    "ADAM Theta Update"
+                ],
+                "Wires": [
+                    "W18",
+                    "W19",
+                    "W20",
+                    "W21",
+                    "W22",
+                    "W23",
+                    "W24",
+                    "W25"
+                ],
+                "Description": "A single iteration of the ADAM optimization algorithm",
+                "Subsystem": null
+            }
+        ]
+    }
+}
